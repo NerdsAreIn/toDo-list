@@ -1,4 +1,4 @@
-const mainList = document.getElementById("mainlist");
+const mainList = document.querySelector(".active");
 
 function displayListItem(item) {
 	const newItem = document.createElement("li");

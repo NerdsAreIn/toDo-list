@@ -7,23 +7,21 @@ const nameField = document.getElementById("nameField");
 const descripField = document.getElementById("descripField");
 const dueField = document.getElementById("dueField");
 const priorityButtons = Array.from(document.getElementsByClassName("priority"));
-console.log({addButton});
-console.log({nameField});
-console.log({descripField});
-console.log({dueField});
-console.log({priorityButtons});
+//console.log({addButton});
+//console.log({nameField});
+//console.log({descripField});
+//console.log({dueField});
+//console.log({priorityButtons});
 
-function getPriority() {
-	let priority = "medium";
-    priorityButtons.forEach(button => {
-		if (button.hasAttribute("checked")) {
-			priority = button.value;
-		}
-    });
-return priority;
-}
+let priority;
+
+priorityButtons.forEach(button => {
+	button.onfocus = () => {
+		priority = button.value;
+	};
+});	
 
 addButton.onclick = () => {
-	let item = new listItem(nameField.value, descripField.value, dueField.value, getPriority());
-	displayListItem(item);
+	let item = new listItem(nameField.value, descripField.value, dueField.value, priority);
+  	displayListItem(item);
 }
