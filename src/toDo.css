@@ -1,10 +1,9 @@
-* {
-
-}
 body {
 text-align: center;
 color: blue;
 background-color: hsl(60, 100%, 81%);
+padding: 0;
+margin: 0;
 }
 h1 {
 margin: 20px auto;
@@ -19,20 +18,23 @@ color: red;
 #mainBox {
 width: 35%;
 float: left;
-margin-left: 30%;
+margin-left: 5%;
 }
 #mainlist {
 border: 3px solid blue;
 min-height: 20px;
 padding: 0;
 }
-.listItem {
+#mainBox .listItem {
 border-bottom: 6px double blue;
 /*border-top: 3px solid red;*/
 margin: 0;
 text-align: left;
 list-style-type: Arabic;
-padding: 3px
+padding: 3px;
+}
+li {
+
 }
 #addItemBox {
 float: right;
@@ -44,9 +46,6 @@ border-radius: 5px;
 p {
 margin: 5px 0;
 }
-.priority {
-
-}
 .high-priority {
 background-color: hsl(0, 75%, 75%);
 }
@@ -55,4 +54,24 @@ background-color: hsl(40, 100%, 70%);
 }
 .low-priority {
 background-color: hsl(120, 70%, 80%);
+}
+#lists-sidebar {
+border-right: 4px solid blue;
+height: 90vh;
+width: 20%;
+float: left;
+}
+#mylists {
+list-style: square inside;
+text-align: left;
+}
+#addListButton {
+background-color: blue;
+color: white;
+}
+#listName {
+background-color: transparent;
+border: none;
+border-bottom: 2px solid blue;
+margin: 10px;
 }
