@@ -15,7 +15,7 @@
                   <li><a href="#">Main</a></li>					
 				</ul>
 			</nav>
-			<input type="text" id="listName" name="listName" value="">
+			<input type="text" id="listName" placeholder="Type name here..." name="listName" value="">
             <button id="addListButton">Create New List</button>
 		</div>
 		<div id="mainBox">
@@ -26,13 +26,13 @@
 		<div id="addItemBox">
 			<fieldset>
 				<legend>Create a To-do Item</legend>
-				<label>Item name:<input type="text" id="nameField" name="name" value="" required></label><br>
-				<label>Item description:<input type="text" id="descripField" name="description" value=""></label><br>
-				<label>Item due date:<input type="date" id="dueField" name="due" value="" required></label><br>
-				<h3>Item priority:</h3>
-					<label>High <input type="radio" class="priority" name="priority" value="high"></label><br>
-					<label>Medium <input type="radio" class="priority" name="priority" value="medium"></label><br>
-					<label>Low <input type="radio" class="priority" name="priority" value="low"></label><br>
+				<label>Item name: <input type="text" id="nameField" name="name" value="" required></label><br>
+				<label>Item description: <input type="text" id="descripField" name="description" value=""></label><br>
+				<label>Item due date: <input type="date" id="dueField" name="due" value="" required></label><br>
+				<h3>Item priority: </h3>
+					<label>High <input type="radio" class="priority" name="priority" value="high"></label><div id="red-box" class="colour-code"></div><br>
+					<label>Medium <input type="radio" class="priority" name="priority" value="medium"></label><div id="orange-box" class="colour-code"></div><br>
+					<label>Low <input type="radio" class="priority" name="priority" value="low"></label><div id="green-box" class="colour-code"></div><br>
 					<button id="addButton">Add Item</button>
 			</fieldset>
 		</div>

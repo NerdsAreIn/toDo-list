@@ -1,26 +1,40 @@
+html {
+width: 100%;
+height: 100%;
+margin: 0;
+padding: 0;
+}
 body {
 text-align: center;
 color: blue;
-background-color: hsl(60, 100%, 81%);
+background-color: hsl(60, 100%, 85%);
 padding: 0;
 margin: 0;
+position: relative;
+width: 100%;
+height: 100%;
+font-size: 16px
 }
 h1 {
-margin: 20px auto;
+margin: 20px auto 40px;
 color: red;
+font-size: 2rem;
 }
 h2 {
 color: red;
+font-size: 1.5rem;
 }
 h3 {
 color: red;
+font-size: 1.2rem;
 }
 #mainBox {
-width: 35%;
-float: left;
-margin-left: 5%;
+width: 37%;
+position: relative;
+left: 25%;
+margin-left: 3%;
 }
-#mainlist {
+.list.active {
 border: 3px solid blue;
 min-height: 20px;
 padding: 0;
@@ -33,18 +47,54 @@ text-align: left;
 list-style-type: Arabic;
 padding: 3px;
 }
+summary {
+font-weight: bold;
+}
+[type="checkbox"] {
+margin-left: 75%;
+margin-bottom: 1px;
+height: 15px;
+width: 15px
+}
+.smaller-left-margin {
+margin-left: 57%
+}
 li {
-
+margin: 10px 0;
+font-size: 1.1rem;
 }
 #addItemBox {
-float: right;
+position: fixed;
+right: 20px;
+top: 70px;
 width: 30%;
 }
 fieldset {
 border-radius: 5px;
 }
+label, input {
+margin: 6px 0;
+}
+.colour-code {
+width: 13px;
+height: 13px;
+display: inline-block;
+margin-left: 15px;
+border: 1px solid black;
+}
+#red-box {
+background-color: hsl(0, 75%, 75%);
+}
+#orange-box {
+background-color: hsl(40, 100%, 70%);
+}
+#green-box {
+background-color: hsl(120, 70%, 80%);
+}
 p {
-margin: 5px 0;
+margin: 10px 0;
+color: black;
+font-size: 1rem;
 }
 .high-priority {
 background-color: hsl(0, 75%, 75%);
@@ -57,21 +107,29 @@ background-color: hsl(120, 70%, 80%);
 }
 #lists-sidebar {
 border-right: 4px solid blue;
-height: 90vh;
+height: 80%;
 width: 20%;
-float: left;
+position: fixed;
+left: 10px;
+bottom: 10px;
+overflow: auto;
 }
 #mylists {
 list-style: square inside;
 text-align: left;
 }
-#addListButton {
+#addListButton, button {
 background-color: blue;
 color: white;
+margin: 12px 0;
+padding: 4px;
+border-radius: 3px;
 }
-#listName {
+#listName, #listName:focus {
 background-color: transparent;
 border: none;
+outline: none;
 border-bottom: 2px solid blue;
 margin: 10px;
 }
+ 

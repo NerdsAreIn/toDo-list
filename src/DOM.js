@@ -39,7 +39,7 @@ function displayList(list) {
 function displayListItem(item) {
 	const newItem = document.createElement("li");
 	newItem.classList.add("listItem");
-    switch(item.priority) {
+        switch(item.priority) {
 		case "high": 
 		newItem.classList.add("high-priority");
 		break;
@@ -50,8 +50,15 @@ function displayListItem(item) {
 		newItem.classList.add("low-priority");
 		break;
 	}
-	newItem.innerHTML = '<details><summary>' + item.name + '</summary><p>' + item.description + '</p></details><label>Due date: ' + item.dueDate + ' <input type="checkbox" name="completed" value=""></label>';
+	newItem.innerHTML = '<details><summary style="font-size: 1rem;">' + item.name + '</summary><p>' + item.description + '</p></details><label style="font-size: 0.9rem;">Due date: ' + item.dueDate + ' <input type="checkbox" name="completed" value=""></label>';
+    setMargin(newItem, item);
 	mainList.appendChild(newItem);	
+}
+function setMargin(parentItem, item) {
+	let checkbox = parentItem.querySelector('[type="checkbox"]');
+	if (item.dueDate != "") {
+		checkbox.className = "smaller-left-margin";
+	}
 }
 
 export {displayListItem};
