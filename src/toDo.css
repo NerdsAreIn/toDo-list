@@ -34,12 +34,12 @@ position: relative;
 left: 25%;
 margin-left: 3%;
 }
-.list.active {
+#mainlist {
 border: 3px solid blue;
 min-height: 20px;
 padding: 0;
 }
-#mainBox .listItem {
+#mainlist .listItem {
 border-bottom: 6px double blue;
 /*border-top: 3px solid red;*/
 margin: 0;

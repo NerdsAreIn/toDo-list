@@ -7,7 +7,7 @@ const descripField = document.getElementById("descripField");
 const dueField = document.getElementById("dueField");
 const priorityButtons = Array.from(document.getElementsByClassName("priority"));
 
-//prepopulated list example:
+//list element object:
 const main = document.getElementById("main");
 
 const addListButton = document.getElementById("addListButton");
@@ -17,14 +17,23 @@ const listContainer = document.getElementById("mainBox");
 
 //UL:
 let listOfLists = document.getElementById("mylists");
-let listElements = [];
+let listElements = [main];
 
 let mainList = document.querySelector("#mainlist");
 
-let priority = "medium";
+let priority;
 
-//list("main");
-updateLists();
+window.onload = () => {
+const mainListObject = new list("Main");
+mainListObject.active = true;
+priority = "medium";
+createList();
+};
+
+function clearFields() {
+	const fields = document.querySelectorAll("fieldset input");
+	fields.map(field => field.value = "");
+}
 
 addItemButton.onclick = () => {
 	let item = new listItem(nameField.value, descripField.value, dueField.value, priority);
@@ -34,47 +43,48 @@ addItemButton.onclick = () => {
 		}
 	});
   	displayListItem(item);
+	clearFields();
 }
 
 addListButton.onclick = () => {
     let newList = new list(nameInput.value);	
-  	displayList(newList);
+  	displayListElement(newList);
 	console.log({newList});
 	console.log(newList.name);
 	console.log({myListsArray});
 }
-function updateLists() {
-listElements.forEach(listElement => {
-	listElement.onclick = (e) => {
-		console.log(String(listElement.innerText));
-		myListsArray.forEach(listObject => {
-			if (listObject.name == listElement.innerText.toString()) {
-			mainList.textContent = "";
-			listObject.active = true;
-			listObject.contents.forEach(listItemObject => {displayListItem(listItemObject)});			
-			console.log({myListsArray});
-			}
-		});
-	//mainList = document.querySelector(".active");
-    
-	}
-});
+
+function createList() {
+	listElements.forEach(listElement => {
+		listElement.onclick = (e) => {
+			console.log(String(listElement.innerText));
+			myListsArray.forEach(listObject => {
+				if (listObject.name == listElement.innerText.toString()) {
+				mainList.textContent = "";
+				listObject.active = true;
+				listObject.contents.forEach(listItemObject => {displayListItem(listItemObject)});			
+				console.log({myListsArray});
+				}
+				else listObject.active = false;
+			});
+		}
+	});
+
 }
-//listObject.contents = an array of list item objects
-//listObject.contents.forEach(listItemObject => {displayListItem(listItemObject)});
 
 priorityButtons.forEach(button => {
+    priority = "medium";
 	button.onfocus = () => {
 		priority = button.value;
-	};
+	};    
 });	
 
-function displayList(list) {
+function displayListElement(list) {
 	const listElement = document.createElement("li");	
     listElement.innerHTML = '<a href="#">' + list.name + '</a>';
 	listElements.push(listElement);
     listOfLists.appendChild(listElement);
-    updateLists();
+    createList();
 	console.log({listOfLists});
     console.log({listElements});
 }
