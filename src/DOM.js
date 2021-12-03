@@ -17,11 +17,13 @@ const listContainer = document.getElementById("mainBox");
 
 //UL:
 let listOfLists = document.getElementById("mylists");
-let listElements = [main];
+let listElements = [main, ];
 
 let mainList = document.querySelector("#mainlist");
 
 let priority = "medium";
+
+//list("main");
 
 addItemButton.onclick = () => {
 	let item = new listItem(nameField.value, descripField.value, dueField.value, priority);
@@ -43,9 +45,9 @@ addListButton.onclick = () => {
 
 listElements.forEach(listElement => {
 	listElement.onclick = (e) => {
+		console.log(String(listElement.innerText));
 		myListsArray.forEach(listObject => {
-			if (listObject.name == listElement.innerText) {
-			//listElement.classList.add("active");
+			if (listObject.name == listElement.innerText.toString()) {
 			mainList.textContent = "";
 			listObject.active = true;
 			listObject.contents.forEach(listItemObject => {displayListItem(listItemObject)});			
