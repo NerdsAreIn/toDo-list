@@ -1,7 +1,6 @@
 import {listItem} from './manageToDoItems.js';
 import {list, myListsArray} from './manageLists.js';
 
-
 const addItemButton = document.getElementById("addButton");
 const nameField = document.getElementById("nameField");
 const descripField = document.getElementById("descripField");
@@ -20,19 +19,22 @@ const listContainer = document.getElementById("mainBox");
 let listOfLists = document.getElementById("mylists");
 let listElements = [main];
 
-let mainList = document.querySelector("mainlist");
+let mainList = document.querySelector("#mainlist");
 
 let priority = "medium";
 
 addItemButton.onclick = () => {
 	let item = new listItem(nameField.value, descripField.value, dueField.value, priority);
-	
+	myListsArray.forEach(listObject => {
+		if (listObject.active == true) {
+		listObject.contents.push(item);
+		}
+	});
   	displayListItem(item);
 }
 
 addListButton.onclick = () => {
-    let newList = new list(nameInput.value);
-	
+    let newList = new list(nameInput.value);	
   	displayList(newList);
 	console.log({newList});
 	console.log(newList.name);
@@ -45,7 +47,9 @@ listElements.forEach(listElement => {
 			if (listObject.name == listElement.innerText) {
 			//listElement.classList.add("active");
 			mainList.textContent = "";
+			listObject.active = true;
 			listObject.contents.forEach(listItemObject => {displayListItem(listItemObject)});			
+			console.log({myListsArray});
 			}
 		});
 	//mainList = document.querySelector(".active");
