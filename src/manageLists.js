@@ -1,9 +1,10 @@
-let myLists = [];
+let myListsArray = [];
 
 function list(name) {
 	this.name = name;
     this.contents = [];
-    myLists.push(list);
+    myListsArray.push(this);
+    console.log({myListsArray})
 }
 
-export {list};
+export {list, myListsArray};

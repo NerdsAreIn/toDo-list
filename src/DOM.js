@@ -1,27 +1,59 @@
 import {listItem} from './manageToDoItems.js';
-import {list} from './manageLists.js';
+import {list, myListsArray} from './manageLists.js';
+
 
 const addItemButton = document.getElementById("addButton");
 const nameField = document.getElementById("nameField");
 const descripField = document.getElementById("descripField");
 const dueField = document.getElementById("dueField");
 const priorityButtons = Array.from(document.getElementsByClassName("priority"));
-const mainList = document.querySelector(".active");
+
+//prepopulated list example:
+const main = document.getElementById("main");
+
 const addListButton = document.getElementById("addListButton");
 const nameInput = document.getElementById("listName");
-const listOfLists = document.getElementById("mylists");
+
+const listContainer = document.getElementById("mainBox");
+
+//UL:
+let listOfLists = document.getElementById("mylists");
+let listElements = [main];
+
+let mainList = document.querySelector("mainlist");
 
 let priority = "medium";
 
 addItemButton.onclick = () => {
 	let item = new listItem(nameField.value, descripField.value, dueField.value, priority);
+	
   	displayListItem(item);
 }
 
 addListButton.onclick = () => {
     let newList = new list(nameInput.value);
+	
   	displayList(newList);
+	console.log({newList});
+	console.log(newList.name);
+	console.log({myListsArray});
 }
+
+listElements.forEach(listElement => {
+	listElement.onclick = (e) => {
+		myListsArray.forEach(listObject => {
+			if (listObject.name == listElement.innerText) {
+			//listElement.classList.add("active");
+			mainList.textContent = "";
+			listObject.contents.forEach(listItemObject => {displayListItem(listItemObject)});			
+			}
+		});
+	//mainList = document.querySelector(".active");
+    
+	}
+});
+//listObject.contents = an array of list item objects
+//listObject.contents.forEach(listItemObject => {displayListItem(listItemObject)});
 
 priorityButtons.forEach(button => {
 	button.onfocus = () => {
@@ -30,10 +62,12 @@ priorityButtons.forEach(button => {
 });	
 
 function displayList(list) {
-	const newList = document.createElement("li");
-    newList.classList.add("list");
-    newList.textContent = list.name;
-    listOfLists.appendChild(newList);
+	const listElement = document.createElement("li");	
+    listElement.innerHTML = '<a href="#">' + list.name + '</a>';
+	listElements.push(listElement);
+    listOfLists.appendChild(listElement);
+	console.log({listOfLists});
+    console.log({listElements});
 }
 
 function displayListItem(item) {
@@ -54,6 +88,7 @@ function displayListItem(item) {
     setMargin(newItem, item);
 	mainList.appendChild(newItem);	
 }
+
 function setMargin(parentItem, item) {
 	let checkbox = parentItem.querySelector('[type="checkbox"]');
 	if (item.dueDate != "") {
