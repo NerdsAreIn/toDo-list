@@ -3,6 +3,7 @@ function listItem(name, description, dueDate, priority) {
 	this.description = description;
 	this.dueDate = dueDate;
 	this.priority = priority;
+    this.complete = false;
     return this;
 }
 export {listItem};

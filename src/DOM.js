@@ -13,26 +13,53 @@ const main = document.getElementById("main");
 const addListButton = document.getElementById("addListButton");
 const nameInput = document.getElementById("listName");
 
-const listContainer = document.getElementById("mainBox");
+//const listContainer = document.getElementById("mainBox");
+const listTitle = document.getElementById("list-title");
 
 //UL:
 let listOfLists = document.getElementById("mylists");
 let listElements = [main];
 
-let mainList = document.querySelector("#mainlist");
+const mainList = document.querySelector("#mainlist");
 
 let priority;
 
+function populateStorage() {
+	window.localStorage.setItem("listElements2", JSON.stringify(listElements));
+	window.localStorage.setItem("myListsArray2", JSON.stringify(myListsArray));
+}
+//populateStorage();
+window.onunload = () => populateStorage();
+
 window.onload = () => {
-const mainListObject = new list("Main");
-mainListObject.active = true;
-priority = "medium";
-createList();
+    console.log({listElements});
+    console.log({myListsArray});
+	if (listElements.length > 1) {
+    	listElements = JSON.parse(localStorage.getItem("listElements2"));
+        listElements = Array.from(listElements);
+	 }
+   	if (myListsArray.length == 0) {
+		const mainListObject = new list("Main");
+		mainListObject.active = true;
+	}
+    else {
+	myListsArray = Array.from(JSON.parse(localStorage.getItem("myListsArray2")));
+	}
+	createList();
 };
 
+priorityButtons.forEach(button => {
+    if (button.hasAttribute("checked")) {
+		priority = button.value;
+    }
+   	button.onfocus = () => {
+		priority = button.value;
+	};    
+});
+
 function clearFields() {
-	const fields = document.querySelectorAll("fieldset input");
-	fields.map(field => field.value = "");
+	const fields = Array.from(document.querySelectorAll(".textfield"));
+    fields.map(field => field.value = "");
 }
 
 addItemButton.onclick = () => {
@@ -43,41 +70,41 @@ addItemButton.onclick = () => {
 		}
 	});
   	displayListItem(item);
-	clearFields();
+    localStorage.clear();
+    populateStorage();
+	clearFields();   
 }
 
 addListButton.onclick = () => {
     let newList = new list(nameInput.value);	
   	displayListElement(newList);
+    nameInput.value = "";
 	console.log({newList});
-	console.log(newList.name);
+	//console.log(newList.name);
 	console.log({myListsArray});
 }
 
 function createList() {
 	listElements.forEach(listElement => {
-		listElement.onclick = (e) => {
-			console.log(String(listElement.innerText));
+		listElement.onclick = () => {
+			//console.log(String(listElement.innerText));
 			myListsArray.forEach(listObject => {
-				if (listObject.name == listElement.innerText.toString()) {
+				if (listObject.name == listElement.innerText) {
 				mainList.textContent = "";
 				listObject.active = true;
-				listObject.contents.forEach(listItemObject => {displayListItem(listItemObject)});			
-				console.log({myListsArray});
+                listTitle.textContent = listObject.name;
+				listObject.contents.forEach(listItemObject => {
+					displayListItem(listItemObject);
+				});			
+				//console.log({myListsArray});
 				}
 				else listObject.active = false;
 			});
 		}
 	});
-
+localStorage.clear();
+populateStorage();
 }
-
-priorityButtons.forEach(button => {
-    priority = "medium";
-	button.onfocus = () => {
-		priority = button.value;
-	};    
-});	
 
 function displayListElement(list) {
 	const listElement = document.createElement("li");	
@@ -103,7 +130,8 @@ function displayListItem(item) {
 		newItem.classList.add("low-priority");
 		break;
 	}
-	newItem.innerHTML = '<details><summary style="font-size: 1rem;">' + item.name + '</summary><p>' + item.description + '</p></details><label style="font-size: 0.9rem;">Due date: ' + item.dueDate + ' <input type="checkbox" name="completed" value=""></label>';
+	newItem.innerHTML = '<details><summary style="font-size: 1rem;">' + item.name + '</summary><p>' + item.description + '</p></details><label style="font-size: 0.9rem;">Due date: ' + item.dueDate + ' <input type="checkbox" name="completed"></label>';
+    
     setMargin(newItem, item);
 	mainList.appendChild(newItem);	
 }
