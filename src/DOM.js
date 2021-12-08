@@ -20,31 +20,38 @@ const listTitle = document.getElementById("list-title");
 let listOfLists = document.getElementById("mylists");
 let listElements = [main];
 
+
 const mainList = document.querySelector("#mainlist");
 
 let priority;
 
 function populateStorage() {
-	window.localStorage.setItem("listElements2", JSON.stringify(listElements));
+	window.localStorage.setItem("listElements2", JSON.stringify(listElements);
+    console.log({listElements});
 	window.localStorage.setItem("myListsArray2", JSON.stringify(myListsArray));
+    console.log("populated!");
+	
 }
-//populateStorage();
-window.onunload = () => populateStorage();
+populateStorage();
+//window.onunload = () => populateStorage();
 
 window.onload = () => {
     console.log({listElements});
     console.log({myListsArray});
-	if (listElements.length > 1) {
-    	listElements = JSON.parse(localStorage.getItem("listElements2"));
-        listElements = Array.from(listElements);
-	 }
+    listElements = localStorage.getItem("listElements2");
+    //listElements = Array.from(listElements);
+    
    	if (myListsArray.length == 0) {
+		console.log("two");
 		const mainListObject = new list("Main");
 		mainListObject.active = true;
 	}
     else {
+	console.log("three");
 	myListsArray = Array.from(JSON.parse(localStorage.getItem("myListsArray2")));
 	}
+	console.log({listElements});
+    console.log({myListsArray});
 	createList();
 };
 
@@ -96,14 +103,14 @@ function createList() {
 				listObject.contents.forEach(listItemObject => {
 					displayListItem(listItemObject);
 				});			
-				//console.log({myListsArray});
+				console.log({listElements});
 				}
 				else listObject.active = false;
 			});
 		}
 	});
-localStorage.clear();
-populateStorage();
+	localStorage.clear();
+	populateStorage();
 }
 
 function displayListElement(list) {
