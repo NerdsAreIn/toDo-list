@@ -19,29 +19,31 @@ const listTitle = document.getElementById("list-title");
 //UL:
 let listOfLists = document.getElementById("mylists");
 let listElements = [main];
-
+let listNames;
 
 const mainList = document.querySelector("#mainlist");
 
 let priority;
 
 function populateStorage() {
-	window.localStorage.setItem("listElements2", JSON.stringify(listElements);
-    console.log({listElements});
-	window.localStorage.setItem("myListsArray2", JSON.stringify(myListsArray));
-    console.log("populated!");
-	
+   listNames = listElements.filter(listElement => {
+	return listElement.childNodes[0].childNodes[0].nodeValue;
+   });
+   console.log({listNames});
+   localStorage.setItem("listNames", JSON.stringify(listNames));
+   localStorage.setItem("myListsArray2", JSON.stringify(myListsArray));
+   console.log("populated!");	
 }
 populateStorage();
 //window.onunload = () => populateStorage();
 
 window.onload = () => {
-    console.log({listElements});
+    //console.log({listElements});
+	//console.log(typeof listElements);
+	console.log(typeof myListsArray);
     console.log({myListsArray});
-    listElements = localStorage.getItem("listElements2");
-    //listElements = Array.from(listElements);
-    
-   	if (myListsArray.length == 0) {
+    //listElements = localStorage.getItem("listElements2");
+	if (myListsArray.length == 0) {
 		console.log("two");
 		const mainListObject = new list("Main");
 		mainListObject.active = true;
@@ -50,9 +52,14 @@ window.onload = () => {
 	console.log("three");
 	myListsArray = Array.from(JSON.parse(localStorage.getItem("myListsArray2")));
 	}
-	console.log({listElements});
+    listNames = Array.from(JSON.parse(localStorage.getItem("listNames")));
+    listNames = Array.from(listNames);
+    listNames.forEach(listName => displayListElement(listName)); 
+   	console.log({listElements});
+	console.log(typeof listElements);
     console.log({myListsArray});
-	createList();
+	console.log(typeof myListsArray);
+	//createList();
 };
 
 priorityButtons.forEach(button => {
