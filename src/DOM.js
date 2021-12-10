@@ -19,36 +19,41 @@ const listTitle = document.getElementById("list-title");
 
 //UL:
 let listOfLists = document.getElementById("mylists");
-let listElements = [main];
-//let listNames;
+let listElements;
+let listNames;
 
 let priority;
 
-populateStorage();
+//populateStorage();
 
 function populateStorage() {
-    let listNames = listElements.map(listElement => {
+    listNames = listElements.map(listElement => {
      console.log(listElement.children[0].childNodes[0].nodeValue);
     return listElement.children[0].childNodes[0].nodeValue;
 	});
-   console.log({listNames});
+   window.localStorage.setItem("listNames2", JSON.stringify(listNames));
+   window.localStorage.setItem("myListsArray2", JSON.stringify(myListsArray));
+  console.log({listNames});
    console.log({myListsArray});   
-   Window.localStorage.setItem("listNames2", JSON.stringify(listNames));
-   Window.localStorage.setItem("myListsArray2", JSON.stringify(myListsArray));
+	console.log({listElements});
+	console.log(localStorage);
    console.log("populated!");	
 }
 
-window.onload = () => {
-//populateStorage();
+//window.addEventListener("unload", populateStorage);
+
+window.addEventListener("load", () => {
+    listElements = [main];
+	//populateStorage();
 	if (myListsArray.length == 0) {
 		const mainListObject = new list("Main");
 		mainListObject.active = true;
 	}
-    else myListsArray = Array.from(JSON.parse(Window.localStorage.getItem("myListsArray2")));
+    else myListsArray = JSON.parse(window.localStorage.getItem("myListsArray2"));
 	console.log({myListsArray});
     //console.log({listNames});
     //console.log(typeof listNames);
-    let listNames = Window.localStorage.getItem("listNames2").split(" ") || ["Main"]; 
+    listNames = window.localStorage.getItem("listNames2").split(" ") || ["Main"]; 
     //console.log({listNames});
     //console.log(typeof listNames);
      for (let i = 1; i < listNames.length; i++) {
@@ -61,7 +66,11 @@ window.onload = () => {
 	console.log({listElements});
 	console.log({myListsArray});
 	createList();
-};
+});
+console.log({listNames});
+   console.log({myListsArray});   
+	console.log({listElements});
+	console.log(localStorage);
 
 priorityButtons.forEach(button => {
     if (button.hasAttribute("checked")) {
@@ -85,7 +94,7 @@ addItemButton.onclick = () => {
 		}
 	});
   	displayListItem(item);
-    //localStorage.clear();
+    localStorage.clear();
     populateStorage();
 	clearFields();   
 }
@@ -107,6 +116,10 @@ function displayListElement(list) {
 }
 
 function createList() {
+    console.log({listNames});
+   console.log({myListsArray});   
+	console.log({listElements});
+	console.log(localStorage);
 	listElements.forEach(listElement => {
 		listElement.onclick = () => {
 			    myListsArray.forEach(listObject => {
@@ -122,7 +135,7 @@ function createList() {
 			});
 		}
 	});
-	//localStorage.clear();
+	localStorage.clear();
 	populateStorage();
 }
 
