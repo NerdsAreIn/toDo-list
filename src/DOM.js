@@ -7,47 +7,50 @@ const descripField = document.getElementById("descripField");
 const dueField = document.getElementById("dueField");
 const priorityButtons = Array.from(document.getElementsByClassName("priority"));
 
+const mainList = document.querySelector("#mainlist");
+
 //list element object:
 const main = document.getElementById("main");
 
 const addListButton = document.getElementById("addListButton");
 const nameInput = document.getElementById("listName");
 
-//const listContainer = document.getElementById("mainBox");
 const listTitle = document.getElementById("list-title");
 
 //UL:
 let listOfLists = document.getElementById("mylists");
 let listElements = [main];
-let listNames;
-
-const mainList = document.querySelector("#mainlist");
+//let listNames;
 
 let priority;
 
-//populateStorage();
+populateStorage();
 
 function populateStorage() {
-   listNames = listElements.filter(listElement => {
+    let listNames = listElements.map(listElement => {
      console.log(listElement.children[0].childNodes[0].nodeValue);
-     if (listElement.children[0].childNodes[0].nodeValue != "undefined") {
-     	return listElement.children[0].childNodes[0].nodeValue;
-	 }
-    });
+    return listElement.children[0].childNodes[0].nodeValue;
+	});
    console.log({listNames});
-   localStorage.setItem("listNames", JSON.stringify(listNames));
-   localStorage.setItem("myListsArray2", JSON.stringify(myListsArray));
+   console.log({myListsArray});   
+   Window.localStorage.setItem("listNames2", JSON.stringify(listNames));
+   Window.localStorage.setItem("myListsArray2", JSON.stringify(myListsArray));
    console.log("populated!");	
 }
 
 window.onload = () => {
+//populateStorage();
 	if (myListsArray.length == 0) {
 		const mainListObject = new list("Main");
 		mainListObject.active = true;
 	}
-    else myListsArray = Array.from(JSON.parse(localStorage.getItem("myListsArray2")));
+    else myListsArray = Array.from(JSON.parse(Window.localStorage.getItem("myListsArray2")));
 	console.log({myListsArray});
-    listNames = Array.from(JSON.parse(localStorage.getItem("listNames"))) || ["Main"];
+    //console.log({listNames});
+    //console.log(typeof listNames);
+    let listNames = Window.localStorage.getItem("listNames2").split(" ") || ["Main"]; 
+    //console.log({listNames});
+    //console.log(typeof listNames);
      for (let i = 1; i < listNames.length; i++) {
         console.log(listNames[i]);
 		const listElement = document.createElement("li");	
@@ -91,8 +94,6 @@ addListButton.onclick = () => {
     let newList = new list(nameInput.value);	
   	displayListElement(newList);
     nameInput.value = "";
-	//console.log({newList});
-	//console.log(newList.name);
 	console.log({myListsArray});
 }
 
@@ -102,8 +103,7 @@ function displayListElement(list) {
 	listElements.push(listElement);
     listOfLists.appendChild(listElement);
     createList();
-	//console.log({listOfLists});
-    //console.log({listElements});
+	//console.log({listElements});
 }
 
 function createList() {
