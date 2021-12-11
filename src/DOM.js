@@ -19,44 +19,51 @@ const listTitle = document.getElementById("list-title");
 
 //UL:
 let listOfLists = document.getElementById("mylists");
-let listElements;
+let listElements = [main];
 let listNames;
 
-let priority;
-
-//populateStorage();
+let priority;		
+//const localStorage = window.localStorage;
 
 function populateStorage() {
-    listNames = listElements.map(listElement => {
-     console.log(listElement.children[0].childNodes[0].nodeValue);
-    return listElement.children[0].childNodes[0].nodeValue;
-	});
-   window.localStorage.setItem("listNames2", JSON.stringify(listNames));
-   window.localStorage.setItem("myListsArray2", JSON.stringify(myListsArray));
-  console.log({listNames});
-   console.log({myListsArray});   
+    getListNames();
+    listNames.toString();
+	console.log({listNames});
+    localStorage.setItem("listNames2", listNames);
+    localStorage.setItem("myListsArray2", JSON.stringify(myListsArray));
+    console.log({listNames});
+    console.log({myListsArray});   
 	console.log({listElements});
 	console.log(localStorage);
-   console.log("populated!");	
+    console.log("populated!");	
 }
 
-//window.addEventListener("unload", populateStorage);
+function getListNames() {
+	listNames = listElements.map(listElement => {
+		console.log(listElement.children[0].childNodes[0].nodeValue);
+		return listElement.children[0].childNodes[0].nodeValue;
+	});
+	return listNames;
+}
 
-window.addEventListener("load", () => {
-    listElements = [main];
-	//populateStorage();
-	if (myListsArray.length == 0) {
+window.addEventListener("beforeunload", populateStorage);
+console.log({listNames});
+console.log({myListsArray});   
+console.log({listElements});
+console.log(localStorage);
+
+window.onload = () => {
+  	if (myListsArray.length == 0)	{
 		const mainListObject = new list("Main");
 		mainListObject.active = true;
 	}
-    else myListsArray = JSON.parse(window.localStorage.getItem("myListsArray2"));
+    else {
+    myListsArray = Array.from(JSON.parse(localStorage.getItem("myListsArray2")))
+	};
 	console.log({myListsArray});
-    //console.log({listNames});
-    //console.log(typeof listNames);
-    listNames = window.localStorage.getItem("listNames2").split(" ") || ["Main"]; 
-    //console.log({listNames});
-    //console.log(typeof listNames);
-     for (let i = 1; i < listNames.length; i++) {
+    listNames = localStorage.getItem("listNames2").split(",")|| ["Main"]; 
+    console.log(listNames.length);
+    for (let i = 1; i < listNames.length; i++) {
         console.log(listNames[i]);
 		const listElement = document.createElement("li");	
     	listElement.innerHTML = '<a href="#">' + listNames[i] + '</a>';     
@@ -65,12 +72,9 @@ window.addEventListener("load", () => {
 	}
 	console.log({listElements});
 	console.log({myListsArray});
+	console.log({listNames});
 	createList();
-});
-console.log({listNames});
-   console.log({myListsArray});   
-	console.log({listElements});
-	console.log(localStorage);
+};
 
 priorityButtons.forEach(button => {
     if (button.hasAttribute("checked")) {
@@ -94,8 +98,8 @@ addItemButton.onclick = () => {
 		}
 	});
   	displayListItem(item);
-    localStorage.clear();
-    populateStorage();
+    //localStorage.clear();
+    //populateStorage();
 	clearFields();   
 }
 
@@ -116,6 +120,7 @@ function displayListElement(list) {
 }
 
 function createList() {
+    //getListNames();
     console.log({listNames});
    console.log({myListsArray});   
 	console.log({listElements});
@@ -135,8 +140,8 @@ function createList() {
 			});
 		}
 	});
-	localStorage.clear();
-	populateStorage();
+	//localStorage.clear();
+	//populateStorage();
 }
 
 function displayListItem(item) {
@@ -164,5 +169,6 @@ function setMargin(parentItem, item) {
 		checkbox.className = "smaller-left-margin";
 	}
 }
+
 
 export {displayListItem};
