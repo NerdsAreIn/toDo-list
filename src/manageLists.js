@@ -1,4 +1,4 @@
-let myListsArray = [];
+import {myListsArray} from "./DOM.js";
 
 function list(name) {
 	this.name = name;
@@ -8,4 +8,6 @@ function list(name) {
     return this;
 }
 
-export {list, myListsArray};
+
+
+export {list};

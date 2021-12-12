@@ -1,11 +1,16 @@
 import {listItem} from './manageToDoItems.js';
-import {list, myListsArray} from './manageLists.js';
+import {list} from './manageLists.js';
 
 const addItemButton = document.getElementById("addButton");
 const nameField = document.getElementById("nameField");
 const descripField = document.getElementById("descripField");
 const dueField = document.getElementById("dueField");
 const priorityButtons = Array.from(document.getElementsByClassName("priority"));
+
+let myListsArray = [];
+const mainListObject = new list("Main");
+mainListObject.active = true;
+console.log({myListsArray});	
 
 const mainList = document.querySelector("#mainlist");
 
@@ -23,16 +28,17 @@ let listElements = [main];
 let listNames;
 
 let priority;		
-//const localStorage = window.localStorage;
+const localStorage = window.localStorage;
 
 function populateStorage() {
     getListNames();
     listNames.toString();
+    //Object(myListsArray);
 	console.log({listNames});
+	console.log({myListsArray});
     localStorage.setItem("listNames2", listNames);
-    localStorage.setItem("myListsArray2", JSON.stringify(myListsArray));
-    console.log({listNames});
-    console.log({myListsArray});   
+    localStorage.setItem("myListsArray", myListsArray);
+    console.log({listNames});       
 	console.log({listElements});
 	console.log(localStorage);
     console.log("populated!");	
@@ -47,20 +53,18 @@ function getListNames() {
 }
 
 window.addEventListener("beforeunload", populateStorage);
-console.log({listNames});
-console.log({myListsArray});   
-console.log({listElements});
-console.log(localStorage);
+
+// TODO: for each object in myListsArray, create two arrays of keys and values, respectively. Turn each of these into strings and save them in localStorage. When retrieving, convert these back into arrays and build up each object in myListsArray by joining the corresponding items in the two arrays - i.e., key-value pairs. 
 
 window.onload = () => {
-  	if (myListsArray.length == 0)	{
-		const mainListObject = new list("Main");
-		mainListObject.active = true;
-	}
-    else {
-    myListsArray = Array.from(JSON.parse(localStorage.getItem("myListsArray2")))
-	};
+console.log(myListsArray.length);
 	console.log({myListsArray});
+    if (localStorage.getItem("myListsArray") != null || undefined) {
+        console.log("found!");
+        console.log({myListsArray});
+        console.log(typeof myListsArray);        
+  		myListsArray = Array.from(JSON.parse(localStorage.getItem("myListsArray")));
+	}	
     listNames = localStorage.getItem("listNames2").split(",")|| ["Main"]; 
     console.log(listNames.length);
     for (let i = 1; i < listNames.length; i++) {
@@ -171,4 +175,4 @@ function setMargin(parentItem, item) {
 }
 
 
-export {displayListItem};
+export {displayListItem, myListsArray};
