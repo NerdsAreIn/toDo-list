@@ -8,9 +8,9 @@ const dueField = document.getElementById("dueField");
 const priorityButtons = Array.from(document.getElementsByClassName("priority"));
 
 let myListsArray = [];
-const mainListObject = new list("Main");
-mainListObject.active = true;
-console.log({myListsArray});	
+let myListsArrayNumber;
+
+
 
 const mainList = document.querySelector("#mainlist");
 
@@ -31,25 +31,54 @@ let priority;
 const localStorage = window.localStorage;
 
 function populateStorage() {
-    getListNames();
+	setKeysAndValues();
+    setListNames();
     listNames.toString();
-    //Object(myListsArray);
-	console.log({listNames});
-	console.log({myListsArray});
+    console.log({myListsArray});
     localStorage.setItem("listNames2", listNames);
-    localStorage.setItem("myListsArray", myListsArray);
-    console.log({listNames});       
-	console.log({listElements});
-	console.log(localStorage);
+    localStorage.setItem("myListsArrayNum", myListsArrayNumber);
+    //localStorage.setItem("myListsArray", myListsArray);
+    console.log(localStorage);
     console.log("populated!");	
 }
 
-function getListNames() {
+function setListNames() {
 	listNames = listElements.map(listElement => {
-		console.log(listElement.children[0].childNodes[0].nodeValue);
 		return listElement.children[0].childNodes[0].nodeValue;
 	});
 	return listNames;
+}
+
+let keys = [];
+let values = [];
+setKeysAndValues();
+
+function setKeysAndValues() {
+	for (let i = 0; i < myListsArray.length; i++) {
+        keys[i] = Object.keys(myListsArray[i]);
+        values[i] = Object.values(myListsArray[i]);
+        console.log(keys[i]);
+		console.log(values[i]);
+    }
+	localStorage.setItem("keys2", keys);
+	localStorage.setItem("values2", values);
+	console.log({keys});
+	console.log({localStorage});
+}
+function getKeysAndValues(number) {       
+		for (let i = 0; i < number; i++) {
+        keys[i] = localStorage.getItem("keys2");
+        values[i] = localStorage.getItem("values2");
+        myListsArray[i] = {
+			[keys[i][0]]: values[i][0],
+			[keys[i][1]]: values[i][1],
+			[keys[i][2]]: values[i][2],                        
+		};
+		console.log(myListsArray[i]);
+        console.log({keys});
+        console.log({values});
+        console.log({localStorage});
+    }
 }
 
 window.addEventListener("beforeunload", populateStorage);
@@ -57,26 +86,26 @@ window.addEventListener("beforeunload", populateStorage);
 // TODO: for each object in myListsArray, create two arrays of keys and values, respectively. Turn each of these into strings and save them in localStorage. When retrieving, convert these back into arrays and build up each object in myListsArray by joining the corresponding items in the two arrays - i.e., key-value pairs. 
 
 window.onload = () => {
-console.log(myListsArray.length);
-	console.log({myListsArray});
-    if (localStorage.getItem("myListsArray") != null || undefined) {
+     myListsArrayNumber = localStorage.getItem("myListsArrayNum");
+     const first = new list("Main");
+     first.active = true;	
+    getKeysAndValues(myListsArrayNumber);
+    /*if (localStorage.getItem("myListsArray") != null || undefined) {
         console.log("found!");
         console.log({myListsArray});
         console.log(typeof myListsArray);        
-  		myListsArray = Array.from(JSON.parse(localStorage.getItem("myListsArray")));
-	}	
+  		//myListsArray = Array.from(JSON.parse(localStorage.getItem("myListsArray")));
+	}*/	
     listNames = localStorage.getItem("listNames2").split(",")|| ["Main"]; 
-    console.log(listNames.length);
+    //console.log(listNames.length);
     for (let i = 1; i < listNames.length; i++) {
-        console.log(listNames[i]);
+        //console.log(listNames[i]);
 		const listElement = document.createElement("li");	
     	listElement.innerHTML = '<a href="#">' + listNames[i] + '</a>';     
 		listElements.push(listElement);
     	listOfLists.appendChild(listElement);
 	}
-	console.log({listElements});
 	console.log({myListsArray});
-	console.log({listNames});
 	createList();
 };
 
@@ -102,16 +131,14 @@ addItemButton.onclick = () => {
 		}
 	});
   	displayListItem(item);
-    //localStorage.clear();
-    //populateStorage();
-	clearFields();   
+    clearFields();   
 }
 
 addListButton.onclick = () => {
-    let newList = new list(nameInput.value);	
+    let newList = new list(nameInput.value);
+    myListsArrayNumber++;	
   	displayListElement(newList);
     nameInput.value = "";
-	console.log({myListsArray});
 }
 
 function displayListElement(list) {
@@ -120,14 +147,10 @@ function displayListElement(list) {
 	listElements.push(listElement);
     listOfLists.appendChild(listElement);
     createList();
-	//console.log({listElements});
 }
 
 function createList() {
-    //getListNames();
-    console.log({listNames});
-   console.log({myListsArray});   
-	console.log({listElements});
+    console.log({myListsArray});   
 	console.log(localStorage);
 	listElements.forEach(listElement => {
 		listElement.onclick = () => {
@@ -144,8 +167,6 @@ function createList() {
 			});
 		}
 	});
-	//localStorage.clear();
-	//populateStorage();
 }
 
 function displayListItem(item) {
@@ -174,5 +195,4 @@ function setMargin(parentItem, item) {
 	}
 }
 
-
-export {displayListItem, myListsArray};
+export {displayListItem, myListsArray, myListsArrayNumber};
