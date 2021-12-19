@@ -8,9 +8,7 @@ const dueField = document.getElementById("dueField");
 const priorityButtons = Array.from(document.getElementsByClassName("priority"));
 
 let myListsArray = [];
-let myListsArrayNumber;
-
-
+let myListsArrayNumber = 0;
 
 const mainList = document.querySelector("#mainlist");
 
@@ -26,14 +24,13 @@ const listTitle = document.getElementById("list-title");
 let listOfLists = document.getElementById("mylists");
 let listElements = [main];
 let listNames;
-
 let priority;		
+
 const localStorage = window.localStorage;
 
 function populateStorage() {
 	setKeysAndValues();
-    setListNames();
-    listNames.toString();
+    setListNames();    
     console.log({myListsArray});
     localStorage.setItem("listNames2", listNames);
     localStorage.setItem("myListsArrayNum", myListsArrayNumber);
@@ -44,13 +41,17 @@ function populateStorage() {
 
 function setListNames() {
 	listNames = listElements.map(listElement => {
-		return listElement.children[0].childNodes[0].nodeValue;
+		if (listElement.children[0].childNodes[0].nodeValue != null) {
+			return listElement.children[0].childNodes[0].nodeValue;
+		}
 	});
+	listNames.toString();
 	return listNames;
 }
 
 let keys = [];
 let values = [];
+
 setKeysAndValues();
 
 function setKeysAndValues() {
@@ -65,20 +66,21 @@ function setKeysAndValues() {
 	console.log({keys});
 	console.log({localStorage});
 }
-function getKeysAndValues(number) {       
-		for (let i = 0; i < number; i++) {
-        keys[i] = localStorage.getItem("keys2");
-        values[i] = localStorage.getItem("values2");
-        myListsArray[i] = {
+
+function getKeysAndValues() {   
+	keys = localStorage.getItem("keys2");
+	values = localStorage.getItem("values2");    
+	for (let i = 0; i < myListsArray.length; i++) {
+		myListsArray[i] = {
 			[keys[i][0]]: values[i][0],
 			[keys[i][1]]: values[i][1],
 			[keys[i][2]]: values[i][2],                        
 		};
-		console.log(myListsArray[i]);
-        console.log({keys});
-        console.log({values});
-        console.log({localStorage});
+       console.log(myListsArray[i]);
     }
+	console.log({keys});
+	console.log({values});
+	console.log({localStorage});
 }
 
 window.addEventListener("beforeunload", populateStorage);
@@ -86,10 +88,13 @@ window.addEventListener("beforeunload", populateStorage);
 // TODO: for each object in myListsArray, create two arrays of keys and values, respectively. Turn each of these into strings and save them in localStorage. When retrieving, convert these back into arrays and build up each object in myListsArray by joining the corresponding items in the two arrays - i.e., key-value pairs. 
 
 window.onload = () => {
-     myListsArrayNumber = localStorage.getItem("myListsArrayNum");
+     //myListsArrayNumber = localStorage.getItem("myListsArrayNum");
      const first = new list("Main");
      first.active = true;	
-    getKeysAndValues(myListsArrayNumber);
+	 /*if (myListsArrayNumber == 0) {
+		 myListsArrayNumber++;
+	 }*/
+     getKeysAndValues();
     /*if (localStorage.getItem("myListsArray") != null || undefined) {
         console.log("found!");
         console.log({myListsArray});
