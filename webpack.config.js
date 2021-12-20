@@ -1,6 +1,11 @@
 const path = require('path');
 
 module.exports = {
+   watchOptions: {
+    aggregateTimeout: 1000,
+    poll: 1000,
+    ignored: /node_modules/,
+ },
   entry: './src/index.js',
   mode: 'development',
   output: {

@@ -1,4 +1,4 @@
-import {myListsArray, myListsArrayNumber} from "./DOM.js";
+import {myListsArray} from "./DOM.js";
 
 function list(name) {
 	this.name = name;
@@ -7,5 +7,6 @@ function list(name) {
     myListsArray.push(this);
     return this;
 }
+//yes
 
 export {list};

@@ -8,7 +8,7 @@ const dueField = document.getElementById("dueField");
 const priorityButtons = Array.from(document.getElementsByClassName("priority"));
 
 let myListsArray = [];
-let myListsArrayNumber = 0;
+//let myListsArrayNumber;
 
 const mainList = document.querySelector("#mainlist");
 
@@ -29,13 +29,15 @@ let priority;
 const localStorage = window.localStorage;
 
 function populateStorage() {
-	setKeysAndValues();
+	//setKeysAndValues();
+	setMyListsArray();
     setListNames();    
-    console.log({myListsArray});
+    console.log({listNames});
     localStorage.setItem("listNames2", listNames);
-    localStorage.setItem("myListsArrayNum", myListsArrayNumber);
-    //localStorage.setItem("myListsArray", myListsArray);
-    console.log(localStorage);
+    localStorage.setItem("myListsStrings2", myListsStrings);
+	localStorage.setItem("myListsArray2", myListsArray);
+	console.log({myListsArray});
+    console.log({localStorage});
     console.log("populated!");	
 }
 
@@ -52,9 +54,7 @@ function setListNames() {
 let keys = [];
 let values = [];
 
-setKeysAndValues();
-
-function setKeysAndValues() {
+/*function setKeysAndValues() {
 	for (let i = 0; i < myListsArray.length; i++) {
         keys[i] = Object.keys(myListsArray[i]);
         values[i] = Object.values(myListsArray[i]);
@@ -65,9 +65,21 @@ function setKeysAndValues() {
 	localStorage.setItem("values2", values);
 	console.log({keys});
 	console.log({localStorage});
-}
+}*/
+let myListsStrings = [];
 
-function getKeysAndValues() {   
+function setMyListsArray() {
+	if (myListsArray.length == 0) return;
+	for (let i = 0; i < myListsArray.length; i++) {
+		myListsArray[i] = String(Object.entries(myListsArray[i]));
+		console.log(myListsArray[i]);
+		console.log({myListsArray});
+		//myListsStrings.push(myListsArray[i]);
+		console.log({myListsStrings});
+	}
+}
+//setMyListsArray();
+/*function getKeysAndValues() {   
 	keys = localStorage.getItem("keys2");
 	values = localStorage.getItem("values2");    
 	for (let i = 0; i < myListsArray.length; i++) {
@@ -81,31 +93,46 @@ function getKeysAndValues() {
 	console.log({keys});
 	console.log({values});
 	console.log({localStorage});
-}
+}*/
 
 window.addEventListener("beforeunload", populateStorage);
+//localStorage.clear();
 
-// TODO: for each object in myListsArray, create two arrays of keys and values, respectively. Turn each of these into strings and save them in localStorage. When retrieving, convert these back into arrays and build up each object in myListsArray by joining the corresponding items in the two arrays - i.e., key-value pairs. 
+// TODO: for each object in myListsArray, create two arrays of keys and values, respectively. 
+// Turn each of these into strings and save them in localStorage. When retrieving, convert these back into arrays 
+// and build up each object in myListsArray by joining the corresponding items in the two arrays -
+// i.e., key-value pairs. 
 
 window.onload = () => {
-     //myListsArrayNumber = localStorage.getItem("myListsArrayNum");
-     const first = new list("Main");
-     first.active = true;	
+    if (localStorage.getItem("myListsArray2")) {
+		myListsArray = localStorage.getItem("myListsArray2").split(",");
+	    console.log({myListsArray});
+		for	(let i = 0; i < myListsArray.length; i++) {
+			myListsStrings.push(myListsArray[i]);
+			console.log(myListsArray[i]);
+			console.log({myListsStrings});
+		}
+	}
+	else if (myListsArray.length == 0) {
+			const first = new list("Main");
+			first.active = true;	
+	}		
 	 /*if (myListsArrayNumber == 0) {
 		 myListsArrayNumber++;
-	 }*/
-     getKeysAndValues();
+	 }*/     
     /*if (localStorage.getItem("myListsArray") != null || undefined) {
-        console.log("found!");
+        console.log("found!");		
         console.log({myListsArray});
         console.log(typeof myListsArray);        
   		//myListsArray = Array.from(JSON.parse(localStorage.getItem("myListsArray")));
 	}*/	
-    listNames = localStorage.getItem("listNames2").split(",")|| ["Main"]; 
-    //console.log(listNames.length);
+    if (localStorage.getItem("listNames2")) {
+		listNames = localStorage.getItem("listNames2").split(",");
+	}
+	else listNames = ["Main"];
+	//listNames.split(","); 
     for (let i = 1; i < listNames.length; i++) {
-        //console.log(listNames[i]);
-		const listElement = document.createElement("li");	
+        const listElement = document.createElement("li");	
     	listElement.innerHTML = '<a href="#">' + listNames[i] + '</a>';     
 		listElements.push(listElement);
     	listOfLists.appendChild(listElement);
@@ -141,7 +168,7 @@ addItemButton.onclick = () => {
 
 addListButton.onclick = () => {
     let newList = new list(nameInput.value);
-    myListsArrayNumber++;	
+    //myListsArrayNumber++;	
   	displayListElement(newList);
     nameInput.value = "";
 }
@@ -200,4 +227,4 @@ function setMargin(parentItem, item) {
 	}
 }
 
-export {displayListItem, myListsArray, myListsArrayNumber};
+export {displayListItem, myListsArray};
