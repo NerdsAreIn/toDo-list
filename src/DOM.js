@@ -47,6 +47,7 @@ function setListNames() {
 }
 
 window.addEventListener("beforeunload", populateStorage);
+//localStorage.clear();
 
 window.onload = () => {
     if (myListsArray.length == 0) {
@@ -107,25 +108,23 @@ function displayListElement(list) {
 }
 
 function createList() {
-    console.log({myListsArray});   
-	console.log(localStorage);
-	listElements.forEach(listElement => {
-		//listElement.classList.remove("active");
-		listElement.onclick = () => {
-			//listElement.classList.add("active");
+    listElements.forEach(listElement => {		
+		listElement.onclick = () => {						
 			myListsArray.forEach(listObject => {
-				if (listObject.name == listElement.innerText) {
-				mainList.textContent = "";
-				listObject.active = true;
-				listTitle.textContent = listObject.name;
-				listObject.contents.forEach(listItemObject => {
-					displayListItem(listItemObject);
-				});			
+				if (listObject.name == listElement.firstElementChild.innerText) {	
+					mainList.textContent = "";
+					listObject.active = true;
+					listTitle.textContent = listObject.name;
+					listObject.contents.forEach(listItemObject => {
+						displayListItem(listItemObject);
+					});			
 				}
-				else listObject.active = false;
+				else  {
+					listObject.active = false;
+				}
 			});
-		}
-	});
+		};
+	});	
 	localStorage.clear();
 	populateStorage();
 }
@@ -144,8 +143,8 @@ function displayListItem(item) {
 		newItem.classList.add("low-priority");
 		break;
 	}
-	newItem.innerHTML = '<details><summary style="font-size: 1rem;">' + item.name + '</summary><p>' + item.description + '</p></details><label style="font-size: 0.9rem;">Due date: ' + item.dueDate + ' <input type="checkbox" name="completed"></label>';    
-    setMargin(newItem, item);
+	newItem.innerHTML = '<div class="toDoBox"><details><summary style="font-size: 1rem;">' + item.name + '</summary><p>' + item.description + '</p></details><label position="relative" style="font-size: 0.9rem;">Due date: ' + item.dueDate + '<p class="complete">Completed: </p><input type="checkbox" name="completed" value=""></label><button class="delete">x</button></div>';    
+    //setMargin(newItem, item);
 	mainList.appendChild(newItem);	
 }
 
