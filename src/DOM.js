@@ -48,8 +48,8 @@ window.addEventListener("beforeunload", populateStorage);
 
 window.onload = () => {
     if (myListsArray.length == 0) {
-			const first = new list("Main");
-			first.active = true;	
+		const first = new list("Main");
+		first.active = true;	
 	}	
     if (localStorage.getItem("listNames2")) {
 		listNames = localStorage.getItem("listNames2").split(",");
@@ -57,7 +57,7 @@ window.onload = () => {
 	else listNames = ["Main"];
 	for (let i = 1; i < listNames.length; i++) {
         const listElement = document.createElement("li");	
-    	listElement.innerHTML = '<a href="#">' + listNames[i] + '</a>';     
+    	listElement.innerHTML = '<a href="#">' + listNames[i] + '</a><button class="delete-li">X</button>';     
 		listElements.push(listElement);
     	listOfLists.appendChild(listElement);
 	}
@@ -83,9 +83,9 @@ addItemButton.onclick = () => {
 	myListsArray.forEach(listObject => {
 		if (listObject.active == true) {
 	    console.log({listObject});
-	    listObject.itemCount += 1;
-		item.index = listObject.itemCount;
-		console.log(listObject.itemCount); 	
+	    //listObject.itemCount += 1;
+		//item.index = listObject.itemCount;
+		//console.log(listObject.itemCount); 	
 		listObject.contents.push(item);
 		//item.parent = listObject;
 		console.log({item});
@@ -117,44 +117,61 @@ function createList() {
 					mainList.textContent = "";
 					listObject.active = true;
 					listTitle.textContent = listObject.name;
+					setItemIndices(listObject);
 					listObject.contents.forEach(listItemObject => {
 						displayListItem(listItemObject);
-					});			
+					});
+					configDeleteButtons(listObject);
+					console.log({listObject});			
 				}
 				else  {
 					listObject.active = false;
 				}
-			});
+			});			
 		};
-	});	
-	localStorage.clear();
-	populateStorage();
+	});		
 }
 
-function getDeleteArray() {
-	deleteArray = [...document.getElementsByClassName("delete")];
+function setItemIndices(listObject) {
+	let number = 1;
+	for (let i = 0; i < listObject.contents.length; i++) {
+		listObject.contents[i].index = number;
+		number++;
+	}
+}
+
+function configDeleteButtons(listObject) {
+	const deleteArray = [...mainList.getElementsByClassName("delete")];
+	console.log({deleteArray});
+	console.log({listObject});
+	console.log({myListsArray});
 	deleteArray.forEach(deleteButton => {
-			deleteButton.addEventListener("click", (e) => {
-					outer: for (let i = 0; i < myListsArray.length; i++) {
-							if (myListsArray[i].active == true) {
-								    //myListsArray[i].contents
-									//let index = library.indexOf(library[i]);
-									//library.splice(index, 1);
-									//break outer;
-							}         
-					}                               
-					localStorage.clear();
-					populateStorage();  
-					e.target.parentElement.parentElement.remove();				                                           
-			});
-	});       
-	return deleteArray;
+		deleteButton.addEventListener("click", (e) => {
+			for (let i = 0; i < listObject.contents.length; i++) {
+				if (listObject.contents[i].index == e.target.parentElement.parentElement.id) {
+					listObject.contents.splice(i, 1);
+					console.log("deleted item");
+					console.log(listObject.contents);
+					setItemIndices(listObject);
+					break;				
+				}				       
+			} 
+			mainList.removeChild(e.target.parentElement.parentElement);           
+			localStorage.clear();
+			populateStorage();
+			myListsArray = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LISTS_OBJECT));
+			console.log({myListsArray});  							                                           
+		});
+	});
+	return myListsArray;       
 }
 
 function displayListItem(item) {
 	const newItem = document.createElement("li");
 	//let parentClass = item.parent.name;
-	//newItem.classList.add(parentClass);	
+	//newItem.classList.add(parentClass);
+	newItem.id = item.index;
+	console.log(newItem.id);	
 	newItem.classList.add("listItem");
 	switch(item.priority) {
 		case "high": 
