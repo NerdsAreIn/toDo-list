@@ -7,7 +7,7 @@ const descripField = document.getElementById("descripField");
 const dueField = document.getElementById("dueField");
 const priorityButtons = Array.from(document.getElementsByClassName("priority"));
 
-const LOCAL_STORAGE_LISTS_OBJECT = "task.myListsArray";
+let LOCAL_STORAGE_LISTS_OBJECT = "task.myListsArray";
 let myListsArray = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LISTS_OBJECT)) || [];
 
 const mainList = document.querySelector("#mainlist");
@@ -20,11 +20,13 @@ const nameInput = document.getElementById("listName");
 
 const listTitle = document.getElementById("list-title");
 
-//UL:
-let listOfLists = document.getElementById("mylists");
+//OL:
+const listOfLists = document.getElementById("mylists");
 let listElements = [main];
 let listNames;
 let priority;		
+
+//createList();
 
 function populateStorage() {
 	setListNames();    
@@ -70,7 +72,11 @@ priorityButtons.forEach(button => {
     }
    	button.onfocus = () => {
 		priority = button.value;
+
 	};    
+	button.onclick = () => {
+		priority = button.value;
+	};
 });
 
 function clearFields() {
@@ -82,16 +88,13 @@ addItemButton.onclick = () => {
 	let item = new listItem(nameField.value, descripField.value, dueField.value, priority);
 	myListsArray.forEach(listObject => {
 		if (listObject.active == true) {
-	    console.log({listObject});
-	    //listObject.itemCount += 1;
-		//item.index = listObject.itemCount;
-		//console.log(listObject.itemCount); 	
-		listObject.contents.push(item);
-		//item.parent = listObject;
-		console.log({item});
+			console.log({listObject});	    
+			listObject.contents.push(item);
+			setItemIndices(listObject);	
+			displayListItem(item);
+			configDeleteButtons(listObject);	
 		}
-	});
-  	displayListItem(item);
+	});  	
     clearFields();   
 }
 
@@ -110,8 +113,10 @@ function displayListElement(list) {
 }
 
 function createList() {
+	console.log({listElements});
     listElements.forEach(listElement => {		
-		listElement.onclick = () => {						
+		listElement.onclick = () => {		
+			console.log("list element clicked");				
 			myListsArray.forEach(listObject => {
 				if (listObject.name == listElement.firstElementChild.innerText) {	
 					mainList.textContent = "";
@@ -129,7 +134,9 @@ function createList() {
 				}
 			});			
 		};
-	});		
+	});
+	localStorage.clear();
+	populateStorage();		
 }
 
 function setItemIndices(listObject) {
@@ -152,25 +159,32 @@ function configDeleteButtons(listObject) {
 					listObject.contents.splice(i, 1);
 					console.log("deleted item");
 					console.log(listObject.contents);
-					setItemIndices(listObject);
+					setItemIndices(listObject);					
 					break;				
 				}				       
 			} 
-			mainList.removeChild(e.target.parentElement.parentElement);           
-			localStorage.clear();
-			populateStorage();
-			myListsArray = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LISTS_OBJECT));
-			console.log({myListsArray});  							                                           
+			e.target.parentElement.parentElement.remove(); 
+			let mainListArray = Array.from(mainList.children);
+			console.log({mainListArray});
+			console.log(listObject.contents);
+			for (let i = 0; i < listObject.contents.length; i++) {    
+				console.log(listObject.contents[i].index);
+				mainListArray[i].id = getIndex(listObject.contents[i]);
+				console.log(mainListArray[i].id);
+			}      
+			//myListsArray = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LISTS_OBJECT));
+			console.log({myListsArray});							                                           
 		});
-	});
-	return myListsArray;       
+	});	       
+}
+
+function getIndex(listItemObject) {
+	return listItemObject.index;
 }
 
 function displayListItem(item) {
 	const newItem = document.createElement("li");
-	//let parentClass = item.parent.name;
-	//newItem.classList.add(parentClass);
-	newItem.id = item.index;
+	newItem.id = getIndex(item);
 	console.log(newItem.id);	
 	newItem.classList.add("listItem");
 	switch(item.priority) {
