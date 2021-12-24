@@ -30,10 +30,7 @@ function populateStorage() {
 	setListNames();    
     localStorage.setItem("listNames2", listNames);
     localStorage.setItem(LOCAL_STORAGE_LISTS_OBJECT, JSON.stringify(myListsArray));
-	console.log({listNames});
-	console.log({myListsArray});
-    console.log({localStorage});
-    console.log("populated!");	
+	console.log("populated!");	
 }
 
 function setListNames() {
@@ -64,7 +61,6 @@ window.onload = () => {
 		listElements.push(listElement);
     	listOfLists.appendChild(listElement);
 	}
-	console.log({myListsArray});
 	createList();
 };
 
@@ -86,7 +82,13 @@ addItemButton.onclick = () => {
 	let item = new listItem(nameField.value, descripField.value, dueField.value, priority);
 	myListsArray.forEach(listObject => {
 		if (listObject.active == true) {
+	    console.log({listObject});
+	    listObject.itemCount += 1;
+		item.index = listObject.itemCount;
+		console.log(listObject.itemCount); 	
 		listObject.contents.push(item);
+		//item.parent = listObject;
+		console.log({item});
 		}
 	});
   	displayListItem(item);
@@ -101,7 +103,7 @@ addListButton.onclick = () => {
 
 function displayListElement(list) {
 	const listElement = document.createElement("li");	
-    listElement.innerHTML = '<a href="#">' + list.name + '</a>';     
+    listElement.innerHTML = '<a href="#">' + list.name + '</a><button class="delete-li">X</button>';     
 	listElements.push(listElement);
     listOfLists.appendChild(listElement);
     createList();
@@ -129,10 +131,32 @@ function createList() {
 	populateStorage();
 }
 
+function getDeleteArray() {
+	deleteArray = [...document.getElementsByClassName("delete")];
+	deleteArray.forEach(deleteButton => {
+			deleteButton.addEventListener("click", (e) => {
+					outer: for (let i = 0; i < myListsArray.length; i++) {
+							if (myListsArray[i].active == true) {
+								    //myListsArray[i].contents
+									//let index = library.indexOf(library[i]);
+									//library.splice(index, 1);
+									//break outer;
+							}         
+					}                               
+					localStorage.clear();
+					populateStorage();  
+					e.target.parentElement.parentElement.remove();				                                           
+			});
+	});       
+	return deleteArray;
+}
+
 function displayListItem(item) {
 	const newItem = document.createElement("li");
+	//let parentClass = item.parent.name;
+	//newItem.classList.add(parentClass);	
 	newItem.classList.add("listItem");
-        switch(item.priority) {
+	switch(item.priority) {
 		case "high": 
 		newItem.classList.add("high-priority");
 		break;
@@ -143,7 +167,10 @@ function displayListItem(item) {
 		newItem.classList.add("low-priority");
 		break;
 	}
-	newItem.innerHTML = '<div class="toDoBox"><details><summary style="font-size: 1rem;">' + item.name + '</summary><p>' + item.description + '</p></details><label position="relative" style="font-size: 0.9rem;">Due date: ' + item.dueDate + '<p class="complete">Completed: </p><input type="checkbox" name="completed" value=""></label><button class="delete">x</button></div>';    
+	newItem.innerHTML = '<div class="toDoBox"><details><summary style="font-size: 1rem;">'
+	 + item.name + '</summary><p>' + item.description + 
+	 '</p></details><label position="relative" style="font-size: 0.9rem;">Due date: ' + item.dueDate +
+	  '<p class="complete">Completed: </p><input type="checkbox" name="completed" value=""></label><button class="delete">X</button></div>';    
     //setMargin(newItem, item);
 	mainList.appendChild(newItem);	
 }

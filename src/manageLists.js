@@ -4,9 +4,9 @@ function list(name) {
 	this.name = name;
     this.contents = [];
     this.active = false;
+    this.itemCount = 0;
     myListsArray.push(this);
     return this;
 }
-//yes
 
 export {list};
