@@ -27,7 +27,8 @@ let listNames;
 let priority;		
 
 function populateStorage() {
-	setListNames();    
+	setListNames();   
+	listNames.toString();
     localStorage.setItem("listNames2", listNames);
     localStorage.setItem(LOCAL_STORAGE_LISTS_OBJECT, JSON.stringify(myListsArray));
 	console.log("populated!");	
@@ -39,7 +40,6 @@ function setListNames() {
 			return listElement.children[0].childNodes[0].nodeValue;
 		}
 	});
-	listNames.toString();
 	return listNames;
 }
 
@@ -55,14 +55,21 @@ window.onload = () => {
 		listNames = localStorage.getItem("listNames2").split(",");
 	}
 	else listNames = ["Main"];
+	createListElements(listNames);	
+	configListDeleteButtons();
+	loadDefaultList();
+	createList();
+};
+
+function createListElements(listNames) {
 	for (let i = 1; i < listNames.length; i++) {
         const listElement = document.createElement("li");	
-    	listElement.innerHTML = '<a href="#">' + listNames[i] + '</a><button class="delete-li">X</button>';     
+    	listElement.innerHTML = '<a href="#">' + listNames[i] + '</a><button class="delete-li">X</button>';
+		listElement.id = listNames[i];     
 		listElements.push(listElement);
     	listOfLists.appendChild(listElement);
 	}
-	createList();
-};
+}
 
 priorityButtons.forEach(button => {
     if (button.hasAttribute("checked")) {
@@ -90,7 +97,7 @@ addItemButton.onclick = () => {
 			listObject.contents.push(item);
 			setItemIndices(listObject);	
 			displayListItem(item);
-			configDeleteButtons(listObject);	
+			configItemDeleteButtons(listObject);	
 		}
 	});  	
     clearFields();   
@@ -99,25 +106,30 @@ addItemButton.onclick = () => {
 addListButton.onclick = () => {
     let newList = new list(nameInput.value);
     displayListElement(newList);
-    nameInput.value = "";
+    nameInput.value = ""
 }
-
 function displayListElement(list) {
 	const listElement = document.createElement("li");	
-    listElement.innerHTML = '<a href="#">' + list.name + '</a><button class="delete-li">X</button>';     
+    listElement.innerHTML = '<a href="#">' + list.name + '</a><button class="delete-li">X</button>';  
+	listElement.id = list.name;   
 	listElements.push(listElement);
     listOfLists.appendChild(listElement);
+	configListDeleteButtons();
     createList();
 }
 
-function createList() {
-	console.log({listElements});
+function loadDefaultList() {
 	setItemIndices(myListsArray[0]);	
 	myListsArray[0].contents.forEach(listItemObject => {
 		displayListItem(listItemObject);
 	});
-	configDeleteButtons(myListsArray[0]);
-    listElements.forEach(listElement => {		
+	configItemDeleteButtons(myListsArray[0]);
+}
+
+
+function createList() {
+	console.log({listElements});
+	listElements.forEach(listElement => {		
 		listElement.onclick = () => {		
 			console.log("list element clicked");				
 			myListsArray.forEach(listObject => {
@@ -129,7 +141,7 @@ function createList() {
 					listObject.contents.forEach(listItemObject => {
 						displayListItem(listItemObject);
 					});
-					configDeleteButtons(listObject);
+					configItemDeleteButtons(listObject);
 					console.log({listObject});			
 				}
 				else  {
@@ -150,7 +162,7 @@ function setItemIndices(listObject) {
 	}
 }
 
-function configDeleteButtons(listObject) {
+function configItemDeleteButtons(listObject) {
 	const deleteArray = [...mainList.getElementsByClassName("delete")];
 	console.log({deleteArray});
 	console.log({listObject});
@@ -178,6 +190,27 @@ function configDeleteButtons(listObject) {
 			console.log({myListsArray});							                                           
 		});
 	});	       
+}
+
+function configListDeleteButtons() {
+	let deleteArray2 = [...listOfLists.getElementsByClassName("delete-li")];
+	console.log({deleteArray2});
+	deleteArray2.forEach(deleteButton => {
+		deleteButton.addEventListener("click", (e) => {
+			console.log("clicked delete button");
+		    deleteButton.parentElement.remove();
+			let toBeDeleted = listElements.findIndex(listElement => listElement.id == e.target.parentElement.id);
+			console.log({toBeDeleted});
+			listElements.splice(toBeDeleted, 1);
+			console.log({listElements});
+			listNames = setListNames();
+			listElements = [main];
+			listOfLists.children = main;
+			//listOfLists.appendChild(main);
+			createListElements(listNames);	
+			configListDeleteButtons();
+		});
+	});
 }
 
 function getIndex(listItemObject) {
