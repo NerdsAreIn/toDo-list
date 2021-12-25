@@ -26,8 +26,6 @@ let listElements = [main];
 let listNames;
 let priority;		
 
-//createList();
-
 function populateStorage() {
 	setListNames();    
     localStorage.setItem("listNames2", listNames);
@@ -114,6 +112,11 @@ function displayListElement(list) {
 
 function createList() {
 	console.log({listElements});
+	setItemIndices(myListsArray[0]);	
+	myListsArray[0].contents.forEach(listItemObject => {
+		displayListItem(listItemObject);
+	});
+	configDeleteButtons(myListsArray[0]);
     listElements.forEach(listElement => {		
 		listElement.onclick = () => {		
 			console.log("list element clicked");				
@@ -172,7 +175,6 @@ function configDeleteButtons(listObject) {
 				mainListArray[i].id = getIndex(listObject.contents[i]);
 				console.log(mainListArray[i].id);
 			}      
-			//myListsArray = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LISTS_OBJECT));
 			console.log({myListsArray});							                                           
 		});
 	});	       
@@ -198,10 +200,10 @@ function displayListItem(item) {
 		newItem.classList.add("low-priority");
 		break;
 	}
-	newItem.innerHTML = '<div class="toDoBox"><details><summary style="font-size: 1rem;">'
+	newItem.innerHTML = '<div class="toDoBox"><details><summary>'
 	 + item.name + '</summary><p>' + item.description + 
-	 '</p></details><label position="relative" style="font-size: 0.9rem;">Due date: ' + item.dueDate +
-	  '<p class="complete">Completed: </p><input type="checkbox" name="completed" value=""></label><button class="delete">X</button></div>';    
+	 '</p></details><p class="dueDate">Due date: ' + item.dueDate + 
+	 '</p><label class="complete">Completed: <input type="checkbox" name="completed" value=""></label><button class="delete">X</button></div>';    
     //setMargin(newItem, item);
 	mainList.appendChild(newItem);	
 }

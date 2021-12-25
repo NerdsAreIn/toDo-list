@@ -1,38 +1,46 @@
 html {
 width: 100%;
 height: 100%;
-margin: 0;
-padding: 0;
+font-size: 17px;
+--myBlue: rgb(11, 11, 167);
 }
 * {
 box-sizing: content-box;
+margin: 0;
+padding: 0;
 }
 body {
 text-align: center;
-color: blue;
+color: var(--myBlue);
 background-color: hsl(60, 100%, 85%);
 padding: 0;
 margin: 0;
 position: relative;
 width: 100%;
 height: 100%;
-font-size: 18px
 }
 h1 {
-margin: 20px auto 40px;
+margin: 15px auto 40px;
 color: red;
 font-size: 2rem;
 }
 h2 {
 color: red;
-font-size: 1.5rem;
+font-size: 1.6rem;
+margin-bottom: 20px;
 }
 h3 {
 color: red;
+font-size: 1.4rem;
+margin-bottom: 15px;
+}
+h4 {
+color: red;
 font-size: 1.2rem;
+margin: 15px 0 10px;
 }
 #mainBox {
-width: 37%;
+width: 38%;
 position: relative;
 left: 25%;
 margin-left: 3%;
@@ -40,58 +48,63 @@ margin-left: 3%;
 #mainlist {
 border: 3px solid blue;
 min-height: 20px;
-padding: 0;
 }
 #mainlist .listItem {
 border-bottom: 6px double blue;
-/*border-top: 3px solid red;*/
 margin: 0;
 text-align: left;
 list-style-type: Arabic;
-padding: 3px;
+padding: 4px 2px 1px 3px;
+}
+.toDoBox {
+position: relative;    
+font-size: 1rem;
+/*border: 2px solid red;*/
 }
 summary {
 font-weight: bold;
+margin-bottom: 7px;
+font-size: 1.1rem;
 /*text-decoration: line-through black 4px;*/
 }
-[type="checkbox"] {
+.dueDate {
+margin: 3px 0;
+}
+.complete {
 position: absolute;
-bottom: -8px; 
-right: 1px;
-height: 13px;
-width: 13px;
+bottom: -3px;
+right: 0px;
+font: inherit;
+}
+input[type="checkbox"] {
+height: 16px;
+width: 16px;
+border: 1px solid black;
+margin: 5px 0 0;
 }
 .smaller-left-margin {
 margin-left: 57%;
-}
-#mylists li {
-margin: 10px 0;
-font-size: 1.2rem;
-text-decoration: none;
-width: 90%;
-border: 2px solid black;
-position: relative;
-}
-a:active, a:focus, li:focus {
-font-size: 1.3rem;
-font-weight: bold;    
-}
-a, a:visited, a:active {
-text-decoration: none;
-color: currentColor;
 }
 #addItemBox {
 position: fixed;
 right: 20px;
 top: 70px;
 width: 30%;
+color: blue;
 }
+legend {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    }
 fieldset {
 border-radius: 5px;
 }
-label, input {
+input {
 margin: 6px 0;
+font-size: 0.85rem;
+padding: 3px 2px;
 }
+
 .colour-code {
 width: 13px;
 height: 13px;
@@ -100,7 +113,7 @@ margin-left: 15px;
 border: 1px solid black;
 }
 #red-box {
-background-color: hsl(0, 75%, 75%);
+background-color: hsl(0, 70%, 80%);
 }
 #orange-box {
 background-color: hsl(40, 100%, 70%);
@@ -114,7 +127,7 @@ color: black;
 font-size: 1rem;
 }
 .high-priority {
-background-color: hsl(0, 75%, 75%);
+background-color: hsl(0, 70%, 80%);
 }
 .medium-priority {
 background-color: hsl(40, 100%, 70%);
@@ -135,12 +148,30 @@ overflow: auto;
 list-style: square inside;
 text-align: left;
 }
+#mylists li {
+margin: 10px 0;
+font-size: 1.2rem;
+text-decoration: none;
+width: 90%;
+border: 2px solid black;
+position: relative;
+color: blue;
+}
+a:active, a:focus, li:focus {
+font-size: 1.3rem;
+font-weight: bold;    
+}
+a, a:visited, a:active {
+text-decoration: none;
+color: currentColor;
+}
 #addListButton, #addButton {
 background-color: blue;
 color: white;
 margin: 12px 0;
 padding: 4px;
 border-radius: 3px;
+font-size: 0.9rem;
 }
 details p {
 /*text-decoration: line-through black 4px;*/
@@ -151,6 +182,7 @@ border: none;
 outline: none;
 border-bottom: 2px solid blue;
 margin: 10px;
+font-size: 0.9rem;
 }
 .delete {
 appearance: none;
@@ -161,8 +193,8 @@ right: 1px;
 top: 1px;
 background-color: red;
 color: white;
-height: 16px;
-width: 16px;
+height: 15px;
+width: 15px;
 padding: 1px;
 font: bolder 1rem;
 text-align: center;
@@ -185,13 +217,4 @@ margin-left: 20px;
 cursor: pointer;
 border: 2px solid white;
 border-radius: 30%;
-}
-.toDoBox {
-position: relative;    
-}
-.complete {
-position: absolute;
-bottom: -12px;
-right: 25px;
-font: inherit;
 }
