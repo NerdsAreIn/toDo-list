@@ -9,14 +9,13 @@
 	<body>
 		<h1>To-do Lister</h1>
 		<div id="lists-sidebar">
-        	<h2>My Lists</h2>
+        	<h3>My Lists</h3>
 			<nav>
 				<ul id="mylists">
                   <li id="main">
 					  <a href="#">Main</a>
-					  <button class="delete-li">X</button>
-					</li>	
-				 </ul>
+				  </li>	
+				</ul>
 			</nav>
 			<input type="text" id="listName" placeholder="Type name here..." name="listName" value="">
             <button id="addListButton">Create New List</button>
@@ -32,7 +31,7 @@
 				<label>Item name: <input type="text" id="nameField" class="textfield" name="name" value="" required></label><br>
 				<label>Item description: <input type="text" class="textfield" id="descripField" name="description" value=""></label><br>
 				<label>Item due date: <input type="date" class="textfield" id="dueField" name="due" value="" required></label><br>
-				<h3>Item priority: </h3>
+				<h4>Item priority: </h4>
 					<label>High <input type="radio" class="priority" name="priority" value="high"></label><div id="red-box" class="colour-code"></div><br>
 					<label>Medium <input type="radio" class="priority" name="priority" value="medium" checked></label><div id="orange-box" class="colour-code"></div><br>
 					<label>Low <input type="radio" class="priority" name="priority" value="low"></label><div id="green-box" class="colour-code"></div><br>
