@@ -44,10 +44,11 @@ function setListNames() {
 }
 
 window.addEventListener("beforeunload", populateStorage);
-localStorage.clear();
+//localStorage.clear();
 
 window.onload = () => {
-	//console.log({myListsArray});
+	console.log({myListsArray});
+	
     if (myListsArray.length == 0) {
 		const first = new list("Main");
 		first.active = true;	
@@ -58,6 +59,7 @@ window.onload = () => {
 	}
 	// first time app is used:
 	else listNames = ["Main"];
+	console.log({listNames});
 	createListElements(listNames);	
 	//configListDeleteButtons();	
 	loadDefaultList();
@@ -104,6 +106,9 @@ function configListDeleteButtons() {
 			console.log({toBeDeleted});
 			if (toBeDeleted > 0) {
 				listElements.splice(toBeDeleted, 1);
+				let index = myListsArray.findIndex (listObject => listObject.name == e.target.parentElement.id);
+				myListsArray.splice(index, 1);
+				console.log({myListsArray});
 				console.log({listElements});
 				listNames = setListNames();
 				listElements = [main];
