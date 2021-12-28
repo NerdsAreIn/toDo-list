@@ -4,6 +4,7 @@ function listItem(name, description, dueDate, priority) {
 	this.dueDate = dueDate;
 	this.priority = priority;
     this.complete = false;	
+	this.completeValue = 10;
 	return this;
 }
 export {listItem};

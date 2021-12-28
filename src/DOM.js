@@ -149,16 +149,20 @@ function configItemDeleteButtons(listObject) {
 
 function configCheckBoxes(listObject) {
 	let checkboxes = [...mainList.getElementsByClassName("checkbox")];
-	console.log({checkboxes});
 	let targetItem;
 	checkboxes.forEach(checkbox => {
 		checkbox.addEventListener("click", (e) => {
-			console.log(e.target.parentElement.parentElement.parentElement);
-			e.target.parentElement.parentElement.parentElement.firstChild.firstChild.firstChild.classList.toggle("complete");
-			e.target.parentElement.parentElement.parentElement.firstChild.firstChild.children[1].classList.toggle("complete");
+			checkbox.parentElement.parentElement.parentElement.firstChild.firstChild.firstChild.classList.toggle("complete");
+			checkbox.parentElement.parentElement.parentElement.firstChild.firstChild.children[1].classList.toggle("complete");
 			targetItem = listObject.contents.find(listItem => listItem.index == checkbox.parentElement.parentElement.parentElement.id);
-			if (targetItem.complete == false) targetItem.complete = true;
-			else if (targetItem.complete == true) targetItem.complete = false;
+			if (targetItem.complete == false) {
+				targetItem.complete = true;	
+				targetItem.completeValue = 0;		
+			}
+			else if (targetItem.complete == true) {
+				targetItem.complete = false;
+				targetItem.completeValue = 10;
+			}
 			console.log({targetItem});
 		});
 	});
@@ -261,7 +265,7 @@ function markComplete(itemElement) {
 	itemElement.firstChild.firstChild.firstChild.classList.add("complete");
 	itemElement.firstChild.firstChild.children[1].classList.add("complete")
 	let checkbox = itemElement.querySelector(".checkbox");
-	checkbox.setAttribute("checked", true);
+	checkbox.setAttribute("checked", true);	
 }
 
 //DOM:
@@ -269,12 +273,15 @@ function assignPriority(itemElement, itemObject) {
 	switch(itemObject.priority) {
 		case "high": 
 		itemElement.classList.add("high-priority");
+		itemObject.value = 10;
 		break;
 		case "medium":
 		itemElement.classList.add("medium-priority");
+		itemObject.value = 20;
 		break;
 		case "low":
 		itemElement.classList.add("low-priority");
+		itemObject.value = 30;
 		break;
 	}
 }
@@ -290,3 +297,41 @@ function displayListItem(item) {
 }
 
 export {displayListItem, myListsArray};
+
+// formula for sorting from high to low priority: 
+myListsArray.forEach(listObject => {	
+	let highPriorityOrder = listObject.contents.sort((listItemA, listItemB) => { 
+        if (listItemA.value > listItemB.value) {return 1;}
+		if (listItemA.value == listItemB.value){return 0;}
+		if (listItemA.value < listItemB.value) {return -1;}
+		});
+		console.log({highPriorityOrder});
+	}
+);
+
+// formula for low to high priority:
+/*myListsArray.forEach(listObject => {	
+	let lowPriorityOrder = listObject.contents.sort((listItemA, listItemB) => { 
+        if (listItemA.value > listItemB.value) {return -1;}
+		if (listItemA.value == listItemB.value){return 0;}
+		if (listItemA.value < listItemB.value) {return 1;}
+		});
+		console.log({lowPriorityOrder});
+	}
+);*/
+
+//formula for arranging by complete status - incomplete first:
+/*myListsArray.forEach(listObject => {	
+	let incompleteFirstOrder = listObject.contents.sort((listItemA, listItemB) => { 
+			if (listItemA.completeValue < listItemB.completeValue) return 1;
+		});
+		console.log({incompleteFirstOrder});
+});*/
+
+//formula for arranging by complete status - complete first:
+myListsArray.forEach(listObject => {	
+	let completeFirstOrder = listObject.contents.sort((listItemA, listItemB) => { 
+			if (listItemA.completeValue > listItemB.completeValue) return 1;
+		});
+		console.log({completeFirstOrder});
+});
