@@ -32,7 +32,7 @@ margin-bottom: 20px;
 h3 {
 color: red;
 font-size: 1.4rem;
-margin-bottom: 15px;
+margin-bottom: 20px;
 }
 h4 {
 color: red;
@@ -40,9 +40,9 @@ font-size: 1.2rem;
 margin: 15px 0 10px;
 }
 #mainBox {
-width: 38%;
+width: 40%;
 position: relative;
-left: 25%;
+left: 22%;
 margin-left: 3%;
 }
 #mainlist {
@@ -92,19 +92,19 @@ top: 70px;
 width: 30%;
 color: blue;
 }
-legend {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    }
 fieldset {
 border-radius: 5px;
+}
+legend {
+font-size: 1.2rem;
+margin: 0 auto 15px;
+
 }
 input {
 margin: 6px 0;
 font-size: 0.85rem;
 padding: 3px 2px;
 }
-
 .colour-code {
 width: 13px;
 height: 13px;
@@ -140,7 +140,7 @@ border-right: 4px solid blue;
 height: 80%;
 width: 20%;
 position: fixed;
-left: 10px;
+left: 5px;
 bottom: 10px;
 overflow: auto;
 }
@@ -149,12 +149,10 @@ list-style: square inside;
 text-align: left;
 }
 #mylists li {
-margin: 10px 0;
+margin: 12px 5px 12px 25px;
 font-size: 1.2rem;
 text-decoration: none;
-width: 90%;
-border: 2px solid black;
-position: relative;
+width: 70%;
 color: blue;
 }
 a:active, a:focus, li:focus {
@@ -205,16 +203,14 @@ border: 1px solid white;
 .delete-li {
 color: white;
 background-color: red;
-width: 17px;
-height: 17px;
+width: 19px;
+height: 19px;
 border: none;
-position: relative;
-left: 20%;
-top: 0px;
+float: right;
 font-weight: bold;
-font-size: 1rem;
-margin-left: 20px;
+font-size: 0.9rem;
+margin-top: 4px;
 cursor: pointer;
-border: 2px solid white;
+border: 1px solid black;
 border-radius: 30%;
 }

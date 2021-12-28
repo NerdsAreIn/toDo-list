@@ -26,6 +26,7 @@ let listElements = [main];
 let listNames;
 let priority;		
 
+//non-DOM?:
 function populateStorage() {
 	setListNames();   
 	listNames.toString();
@@ -33,7 +34,7 @@ function populateStorage() {
     localStorage.setItem(LOCAL_STORAGE_LISTS_OBJECT, JSON.stringify(myListsArray));
 	console.log("populated!");	
 }
-
+//DOM:
 function setListNames() {
 	listNames = listElements.map(listElement => {
 		if (listElement.children[0].childNodes[0].nodeValue != null) {
@@ -46,92 +47,76 @@ function setListNames() {
 window.addEventListener("beforeunload", populateStorage);
 //localStorage.clear();
 
+//DOM:
 window.onload = () => {
 	console.log({myListsArray});
-	
     if (myListsArray.length == 0) {
 		const first = new list("Main");
 		first.active = true;	
 	}	
     if (localStorage.getItem("listNames2")) {
-		// will already include "main" as first item
+		// will already include "main" as first item:
 		listNames = localStorage.getItem("listNames2").split(",");
 	}
 	// first time app is used:
 	else listNames = ["Main"];
-	console.log({listNames});
 	createListElements(listNames);	
-	//configListDeleteButtons();	
 	loadDefaultList();
 };
 
+//DOM:
 function createListElements(listNames) {
 	for (let i = 1; i < listNames.length; i++) {
         const listElement = document.createElement("li");	
     	listElement.innerHTML = '<a href="#">' + listNames[i] + '</a><button class="delete-li">X</button>';
 		listElement.id = listNames[i];     
-		console.log(listElement.id);
 		listElements.push(listElement);
-		console.log({listElements});
-    	listOfLists.appendChild(listElement);
+		listOfLists.appendChild(listElement);
 		configListDeleteButtons();
 		setListEventHandlers();
 	}
 }
 
+//DOM:
 function clearListOfLists() {
 	while (listOfLists.hasChildNodes()) {
-		console.log("has child");
 		listOfLists.firstChild.remove();
 	}
 	return;
 }
-
-let deleteArray2;
-
+//DOM:
 function configListDeleteButtons() {
-	deleteArray2 = [...listOfLists.getElementsByClassName("delete-li")];
-	console.log({deleteArray2});
+	let deleteArray2 = [...listOfLists.getElementsByClassName("delete-li")];
 	deleteArray2.forEach(deleteButton => {
 		deleteButton.addEventListener("click", (e) => {
 			e.stopPropagation();
-			console.log("clicked list-delete button");
-		    deleteButton.parentElement.remove();
-			let toBeDeleted = listElements.findIndex(listElement => {
-				if (listElement.id == e.target.parentElement.id) {
-					console.log(listElement.id);
-					return listElement.id;
-				}
-			});
-			console.log({toBeDeleted});
+			deleteButton.parentElement.remove();
+			let toBeDeleted = listElements.findIndex(listElement => listElement.id == e.target.parentElement.id);
 			if (toBeDeleted > 0) {
 				listElements.splice(toBeDeleted, 1);
 				let index = myListsArray.findIndex (listObject => listObject.name == e.target.parentElement.id);
 				myListsArray.splice(index, 1);
-				console.log({myListsArray});
-				console.log({listElements});
 				listNames = setListNames();
 				listElements = [main];
-				console.log({listNames});
-				//listOfLists.children = main;
-				console.log({listOfLists});
 				clearListOfLists();
 				listOfLists.appendChild(main);
-				console.log({listOfLists});			
 				createListElements(listNames);	
 			}
-			//configListDeleteButtons();
 		});
 	});
 }
+
+//DOM:
 function loadDefaultList() {
 	setItemIndices(myListsArray[0]);	
 	myListsArray[0].contents.forEach(listItemObject => {
 		displayListItem(listItemObject);
 	});
 	configItemDeleteButtons(myListsArray[0]);
+	configCheckBoxes(mainList);
 }
 
+//non-DOM:
 function setItemIndices(listObject) {
 	let number = 1;
 	for (let i = 0; i < listObject.contents.length; i++) {
@@ -140,36 +125,34 @@ function setItemIndices(listObject) {
 	}
 }
 
+//DOM:
 function configItemDeleteButtons(listObject) {
-	const deleteArray = [...mainList.getElementsByClassName("delete")];
-	//console.log({deleteArray});
-	//console.log({listObject});
-	//console.log({myListsArray});
+	let deleteArray = [...mainList.getElementsByClassName("delete")];
 	deleteArray.forEach(deleteButton => {
 		deleteButton.addEventListener("click", (e) => {
 			for (let i = 0; i < listObject.contents.length; i++) {
 				if (listObject.contents[i].index == e.target.parentElement.parentElement.id) {
 					listObject.contents.splice(i, 1);
-					//console.log("deleted item");
-					//console.log(listObject.contents);
-					setItemIndices(listObject);					
+					setItemIndices(listObject);							
 					break;				
 				}				       
 			} 
 			e.target.parentElement.parentElement.remove(); 
+			configCheckBoxes(mainList);
 			let mainListArray = Array.from(mainList.children);
-			//console.log({mainListArray});
-			//console.log(listObject.contents);
 			for (let i = 0; i < listObject.contents.length; i++) {    
-				//console.log(listObject.contents[i].index);
 				mainListArray[i].id = getIndex(listObject.contents[i]);
-				//console.log(mainListArray[i].id);
-			}      
-			//console.log({myListsArray});							                                           
+			}  						                                           
 		});
 	});	       
 }
 
+function configCheckBoxes(DOMlist) {
+	let checkboxes = [...mainList.getElementsByClassName("checkbox")];
+	console.log({checkboxes});
+}
+
+//DOM:
 priorityButtons.forEach(button => {
     if (button.hasAttribute("checked")) {
 		priority = button.value;
@@ -183,47 +166,49 @@ priorityButtons.forEach(button => {
 	};
 });
 
+//DOM:
 function clearFields() {
 	const fields = Array.from(document.querySelectorAll(".textfield"));
     fields.map(field => field.value = "");
 }
 
+//DOM:
 addItemButton.onclick = () => {
 	let item = new listItem(nameField.value, descripField.value, dueField.value, priority);
 	myListsArray.forEach(listObject => {
 		if (listObject.active == true) {
-			console.log({listObject});	    
 			listObject.contents.push(item);
 			setItemIndices(listObject);	
 			displayListItem(item);
-			configItemDeleteButtons(listObject);	
+			configItemDeleteButtons(listObject);
+			configCheckBoxes(mainList);
 		}
 	});  	
     clearFields();   
 }
 
+//DOM:
 addListButton.onclick = () => {
     let newList = new list(nameInput.value);
     displayListElement(newList);
     nameInput.value = ""
 }
 
+//DOM:
 function displayListElement(list) {
 	const listElement = document.createElement("li");	
     listElement.innerHTML = '<a href="#">' + list.name + '</a><button class="delete-li">X</button>';  
 	listElement.id = list.name;   
-	console.log(listElement.id);
 	listElements.push(listElement);
     listOfLists.appendChild(listElement);
 	configListDeleteButtons();
     setListEventHandlers();
 }
 
+//DOM:
 function setListEventHandlers() {
-	//console.log({myListsArray});
 	listElements.forEach(listElement => {		
 		listElement.onclick = () => {		
-			console.log("list element clicked");				
 			myListsArray.forEach(listObject => {
 				if (listObject.name == listElement.firstElementChild.innerText) {	
 					mainList.textContent = "";
@@ -234,7 +219,7 @@ function setListEventHandlers() {
 						displayListItem(listItemObject);
 					});
 					configItemDeleteButtons(listObject);
-					console.log({listObject});			
+					configCheckBoxes(mainList);
 				}
 				else  {
 					listObject.active = false;
@@ -246,14 +231,15 @@ function setListEventHandlers() {
 	populateStorage();		
 }
 
+//non-DOM?:
 function getIndex(listItemObject) {
 	return listItemObject.index;
 }
 
+//DOM:
 function displayListItem(item) {
 	const newItem = document.createElement("li");
 	newItem.id = getIndex(item);
-	console.log(newItem.id);	
 	newItem.classList.add("listItem");
 	switch(item.priority) {
 		case "high": 
@@ -269,16 +255,8 @@ function displayListItem(item) {
 	newItem.innerHTML = '<div class="toDoBox"><details><summary>'
 	 + item.name + '</summary><p>' + item.description + 
 	 '</p></details><p class="dueDate">Due date: ' + item.dueDate + 
-	 '</p><label class="complete">Completed: <input type="checkbox" name="completed" value=""></label><button class="delete">X</button></div>';    
-    //setMargin(newItem, item);
-	mainList.appendChild(newItem);	
-}
-
-function setMargin(parentItem, item) {
-	let checkbox = parentItem.querySelector('[type="checkbox"]');
-	if (item.dueDate != "") {
-		checkbox.className = "smaller-left-margin";
-	}
+	 '</p><label class="complete">Completed: <input type="checkbox" class="checkbox" name="completed" value=""></label><button class="delete">X</button></div>';    
+    mainList.appendChild(newItem);	
 }
 
 export {displayListItem, myListsArray};
