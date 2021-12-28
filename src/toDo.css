@@ -65,12 +65,18 @@ summary {
 font-weight: bold;
 margin-bottom: 7px;
 font-size: 1.1rem;
-/*text-decoration: line-through black 4px;*/
+transition: text-decoration 1s;
+}
+summary.complete {
+text-decoration: line-through black 4px;
+}
+details p.complete {
+text-decoration: line-through black 4px;
 }
 .dueDate {
 margin: 3px 0;
 }
-.complete {
+.completeLabel {
 position: absolute;
 bottom: -3px;
 right: 0px;
@@ -98,7 +104,6 @@ border-radius: 5px;
 legend {
 font-size: 1.2rem;
 margin: 0 auto 15px;
-
 }
 input {
 margin: 6px 0;
@@ -170,9 +175,6 @@ margin: 12px 0;
 padding: 4px;
 border-radius: 3px;
 font-size: 0.9rem;
-}
-details p {
-/*text-decoration: line-through black 4px;*/
 }
 #listName, #listName:focus {
 background-color: transparent;

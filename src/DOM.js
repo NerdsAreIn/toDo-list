@@ -113,7 +113,7 @@ function loadDefaultList() {
 		displayListItem(listItemObject);
 	});
 	configItemDeleteButtons(myListsArray[0]);
-	configCheckBoxes(mainList);
+	configCheckBoxes(myListsArray[0]);
 }
 
 //non-DOM:
@@ -138,7 +138,7 @@ function configItemDeleteButtons(listObject) {
 				}				       
 			} 
 			e.target.parentElement.parentElement.remove(); 
-			configCheckBoxes(mainList);
+			configCheckBoxes(listObject);
 			let mainListArray = Array.from(mainList.children);
 			for (let i = 0; i < listObject.contents.length; i++) {    
 				mainListArray[i].id = getIndex(listObject.contents[i]);
@@ -147,9 +147,21 @@ function configItemDeleteButtons(listObject) {
 	});	       
 }
 
-function configCheckBoxes(DOMlist) {
+function configCheckBoxes(listObject) {
 	let checkboxes = [...mainList.getElementsByClassName("checkbox")];
 	console.log({checkboxes});
+	let targetItem;
+	checkboxes.forEach(checkbox => {
+		checkbox.addEventListener("click", (e) => {
+			console.log(e.target.parentElement.parentElement.parentElement);
+			e.target.parentElement.parentElement.parentElement.firstChild.firstChild.firstChild.classList.toggle("complete");
+			e.target.parentElement.parentElement.parentElement.firstChild.firstChild.children[1].classList.toggle("complete");
+			targetItem = listObject.contents.find(listItem => listItem.index == checkbox.parentElement.parentElement.parentElement.id);
+			if (targetItem.complete == false) targetItem.complete = true;
+			else if (targetItem.complete == true) targetItem.complete = false;
+			console.log({targetItem});
+		});
+	});
 }
 
 //DOM:
@@ -181,7 +193,7 @@ addItemButton.onclick = () => {
 			setItemIndices(listObject);	
 			displayListItem(item);
 			configItemDeleteButtons(listObject);
-			configCheckBoxes(mainList);
+			configCheckBoxes(listObject);
 		}
 	});  	
     clearFields();   
@@ -219,7 +231,7 @@ function setListEventHandlers() {
 						displayListItem(listItemObject);
 					});
 					configItemDeleteButtons(listObject);
-					configCheckBoxes(mainList);
+					configCheckBoxes(listObject);
 				}
 				else  {
 					listObject.active = false;
@@ -237,25 +249,43 @@ function getIndex(listItemObject) {
 }
 
 //DOM:
-function displayListItem(item) {
-	const newItem = document.createElement("li");
-	newItem.id = getIndex(item);
-	newItem.classList.add("listItem");
-	switch(item.priority) {
-		case "high": 
-		newItem.classList.add("high-priority");
-		break;
-		case "medium":
-		newItem.classList.add("medium-priority");
-		break;
-		case "low":
-		newItem.classList.add("low-priority");
-		break;
-	}
-	newItem.innerHTML = '<div class="toDoBox"><details><summary>'
+function createItemContent(item) {
+	return '<div class="toDoBox"><details><summary>'
 	 + item.name + '</summary><p>' + item.description + 
 	 '</p></details><p class="dueDate">Due date: ' + item.dueDate + 
-	 '</p><label class="complete">Completed: <input type="checkbox" class="checkbox" name="completed" value=""></label><button class="delete">X</button></div>';    
+	 '</p><label class="completeLabel">Completed: <input type="checkbox" class="checkbox" name="completed" value=""></label><button class="delete">X</button></div>';    
+}
+
+//DOM:
+function markComplete(itemElement) {
+	itemElement.firstChild.firstChild.firstChild.classList.add("complete");
+	itemElement.firstChild.firstChild.children[1].classList.add("complete")
+	let checkbox = itemElement.querySelector(".checkbox");
+	checkbox.setAttribute("checked", true);
+}
+
+//DOM:
+function assignPriority(itemElement, itemObject) {
+	switch(itemObject.priority) {
+		case "high": 
+		itemElement.classList.add("high-priority");
+		break;
+		case "medium":
+		itemElement.classList.add("medium-priority");
+		break;
+		case "low":
+		itemElement.classList.add("low-priority");
+		break;
+	}
+}
+//DOM:
+function displayListItem(item) {
+	const newItem = document.createElement("li");
+	newItem.id = getIndex(item);	
+	newItem.classList.add("listItem");
+	assignPriority(newItem, item);
+	newItem.innerHTML = createItemContent(item);
+	if (item.complete == true) markComplete(newItem);
     mainList.appendChild(newItem);	
 }
 
