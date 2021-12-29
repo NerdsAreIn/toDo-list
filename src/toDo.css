@@ -5,9 +5,13 @@ font-size: 17px;
 --myBlue: rgb(11, 11, 167);
 }
 * {
+appearance: none;
 box-sizing: content-box;
 margin: 0;
 padding: 0;
+}
+*:hover, *:active, *:focus, *:focus-within {
+appearance: none;
 }
 body {
 text-align: center;
@@ -21,21 +25,21 @@ height: 100%;
 }
 h1 {
 margin: 15px auto 40px;
-color: red;
+color: ;
 font-size: 2rem;
 }
 h2 {
-color: red;
+color: ;
 font-size: 1.6rem;
 margin-bottom: 20px;
 }
 h3 {
-color: red;
+color: ;
 font-size: 1.4rem;
 margin-bottom: 20px;
 }
 h4 {
-color: red;
+color: ;
 font-size: 1.2rem;
 margin: 15px 0 10px;
 }
@@ -59,7 +63,6 @@ padding: 4px 2px 1px 3px;
 .toDoBox {
 position: relative;    
 font-size: 1rem;
-/*border: 2px solid red;*/
 }
 summary {
 font-weight: bold;
@@ -91,10 +94,39 @@ margin: 5px 0 0;
 .smaller-left-margin {
 margin-left: 57%;
 }
+div#sortBox {
+position: fixed;
+right: 8%;
+top: 21%;
+width: 25%;
+text-align: center;
+}
+#sortBox label {
+margin-right: 10px;
+font-variant: small-caps;
+font-size: 1.2rem;
+}
+/* !FOR SOME REASON, I CAN'T REMOVE THE AUTO-STYLING GREY/BLUE BACKGROUND WHEN HOVERING...! */
+option:hover {
+appearance: none;
+-moz-appearance: none;
+-webkit-appearance: none;
+}
+option:hover {
+background-color: aquamarine;
+}
+select {
+background-color: azure;
+color: var(--myBlue);
+font-size: 0.9rem;
+border: 2px solid blue;
+height: 22px;
+padding: 3px;
+}
 #addItemBox {
 position: fixed;
 right: 20px;
-top: 70px;
+top: 35%;
 width: 30%;
 color: blue;
 }
