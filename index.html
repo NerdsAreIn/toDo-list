@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head> 
-    		<title>To-do List</title>
-    		<meta charset="UTF-8">
-    		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>To-do List</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="../src/toDo.css" type="text/css">
 	</head>
 	<body>
@@ -25,6 +25,18 @@
 			<ol id="mainlist">
 			</ol>
         </div>
+		<div id="sortBox">
+			<label for="selectMenu">Sort by:</label>
+			<select id="selectMenu">
+				<option id="default-option">----------------</option>
+				<option class="select-option" id="dueDateEarliest" value="dueDateEarliest">Due date: earliest to latest</option>
+				<option class="select-option" id="dueDateLatest" value="dueDateLatest">Due date: latest to earliest</option>
+				<option class="select-option" id="highPriority" value="highPriority">Priority: high to low</option>
+				<option class="select-option" id="lowPriority" value="lowPriority">Priority: low to high</option>
+				<option class="select-option" id="incompleteFirst" value="incompleteFirst">Incomplete first</option>
+				<option class="select-option" id="completeFirst" value="completeFirst">Complete first</option>
+			</select>
+		</div>
 		<div id="addItemBox">
 			<fieldset>
 				<legend>Create a To-do Item</legend>
