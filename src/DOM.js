@@ -298,27 +298,62 @@ function displayListItem(item) {
 
 export {displayListItem, myListsArray};
 
+const sortBox = document.getElementById("sortBox");
+
+sortBox.addEventListener("click", function getOrder(e) {
+	//let listObject = myListsArray.find(list => list.active == true);
+	//console.log({listObject});
+	switch (e.target.id) {
+		case "highPriority":
+		getHighPriorityOrder();
+		break;		
+		case "lowPriority":
+		getLowPriorityOrder();
+		break;		
+		case "highPriority":
+		getHighPriorityOrder();
+		break;		
+		case "highPriority":
+		getHighPriorityOrder();
+		break;		
+
+	}
+});
+
 // formula for sorting from high to low priority: 
-myListsArray.forEach(listObject => {	
-	let highPriorityOrder = listObject.contents.sort((listItemA, listItemB) => { 
-        if (listItemA.value > listItemB.value) {return 1;}
-		if (listItemA.value == listItemB.value){return 0;}
-		if (listItemA.value < listItemB.value) {return -1;}
+function getHighPriorityOrder() {	
+	myListsArray.forEach(listObject => {
+		let highPriorityOrder = listObject.contents.sort((listItemA, listItemB) => { 
+			if (listItemA.value > listItemB.value) {return 1;}
+			if (listItemA.value == listItemB.value){return 0;}
+			if (listItemA.value < listItemB.value) {return -1;}
 		});
 		console.log({highPriorityOrder});
-	}
-);
+		//return highPriorityOrder;
+});
+}
+
 
 // formula for low to high priority:
-/*myListsArray.forEach(listObject => {	
-	let lowPriorityOrder = listObject.contents.sort((listItemA, listItemB) => { 
+function getLowPriorityOrder() {	
+	let activeList = myListsArray.find(list => list.active == true);
+	let lowPriorityOrder = activeList.contents.sort((listItemA, listItemB) => { 
         if (listItemA.value > listItemB.value) {return -1;}
 		if (listItemA.value == listItemB.value){return 0;}
 		if (listItemA.value < listItemB.value) {return 1;}
-		});
-		console.log({lowPriorityOrder});
+	});	
+	console.log({lowPriorityOrder});
+	console.log({activeList});
+	mainList.textContent = "";
+	let number = 1;
+	for (let i = 0; i < lowPriorityOrder.length; i++) {
+		lowPriorityOrder[i].index = number;
+		displayListItem(lowPriorityOrder[i]);		
+		number++;
 	}
-);*/
+	//return lowPriorityOrder;
+}
+
 
 //formula for arranging by complete status - incomplete first:
 /*myListsArray.forEach(listObject => {	

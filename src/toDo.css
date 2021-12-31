@@ -5,13 +5,9 @@ font-size: 17px;
 --myBlue: rgb(11, 11, 167);
 }
 * {
-appearance: none;
 box-sizing: content-box;
 margin: 0;
 padding: 0;
-}
-*:hover, *:active, *:focus, *:focus-within {
-appearance: none;
 }
 body {
 text-align: center;
@@ -94,7 +90,7 @@ margin: 5px 0 0;
 .smaller-left-margin {
 margin-left: 57%;
 }
-div#sortBox {
+#sortBox {
 position: fixed;
 right: 8%;
 top: 21%;
@@ -107,10 +103,8 @@ font-variant: small-caps;
 font-size: 1.2rem;
 }
 /* !FOR SOME REASON, I CAN'T REMOVE THE AUTO-STYLING GREY/BLUE BACKGROUND WHEN HOVERING...! */
-option:hover {
-appearance: none;
--moz-appearance: none;
--webkit-appearance: none;
+#sortBox option:hover {
+background-color: aquamarine;
 }
 option:hover {
 background-color: aquamarine;
