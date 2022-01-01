@@ -50,7 +50,7 @@ window.addEventListener("beforeunload", populateStorage);
 //DOM:
 window.onload = () => {
 	console.log({myListsArray});
-    if (myListsArray.length == 0) {
+	if (myListsArray.length == 0) {
 		const first = new list("Main");
 		first.active = true;	
 	}	
@@ -108,6 +108,7 @@ function configListDeleteButtons() {
 
 //DOM:
 function loadDefaultList() {
+	myListsArray[0].active = true;
 	setItemIndices(myListsArray[0]);	
 	myListsArray[0].contents.forEach(listItemObject => {
 		displayListItem(listItemObject);
@@ -300,73 +301,97 @@ export {displayListItem, myListsArray};
 
 const sortBox = document.getElementById("sortBox");
 
+//DOM:
 sortBox.addEventListener("click", function getOrder(e) {
-	//let listObject = myListsArray.find(list => list.active == true);
-	//console.log({listObject});
+	let activeList = myListsArray.find(list => list.active == true);
 	switch (e.target.id) {
 		case "highPriority":
-		getHighPriorityOrder();
+		getHighPriorityOrder(activeList);
 		break;		
 		case "lowPriority":
-		getLowPriorityOrder();
+		getLowPriorityOrder(activeList);
 		break;		
-		case "highPriority":
-		getHighPriorityOrder();
+		case "incompleteFirst":
+		getIncompleteFirstOrder(activeList);
 		break;		
-		case "highPriority":
-		getHighPriorityOrder();
+		case "completeFirst":
+		getCompleteFirstOrder(activeList);
+		break;
+		case "dueDateEarliest":
+		getEarliestDateFirst(activeList);
 		break;		
-
+		case "dueDateLatest":
+		getLatestDateFirst(activeList);
+		break;
 	}
+	configItemDeleteButtons(activeList);
+	configCheckBoxes(activeList);
 });
 
-// formula for sorting from high to low priority: 
-function getHighPriorityOrder() {	
-	myListsArray.forEach(listObject => {
-		let highPriorityOrder = listObject.contents.sort((listItemA, listItemB) => { 
-			if (listItemA.value > listItemB.value) {return 1;}
-			if (listItemA.value == listItemB.value){return 0;}
-			if (listItemA.value < listItemB.value) {return -1;}
-		});
-		console.log({highPriorityOrder});
-		//return highPriorityOrder;
-});
+//DOM:
+function displayReorderedList(currentListOrder) {
+	mainList.textContent = "";
+	let number = 1;
+	for (let i = 0; i < currentListOrder.length; i++) {
+		currentListOrder[i].index = number;
+		displayListItem(currentListOrder[i]);		
+		number++;
+	}	
 }
-
-
-// formula for low to high priority:
-function getLowPriorityOrder() {	
-	let activeList = myListsArray.find(list => list.active == true);
+//NON-DOM:
+function getHighPriorityOrder(activeList) {	
+	let highPriorityOrder = activeList.contents.sort((listItemA, listItemB) => { 
+		if (listItemA.value > listItemB.value) {return 1;}
+		if (listItemA.value == listItemB.value){return 0;}
+		if (listItemA.value < listItemB.value) {return -1;}
+	});
+	displayReorderedList(highPriorityOrder);
+}
+//NON-DOM:
+function getLowPriorityOrder(activeList) {	
 	let lowPriorityOrder = activeList.contents.sort((listItemA, listItemB) => { 
         if (listItemA.value > listItemB.value) {return -1;}
 		if (listItemA.value == listItemB.value){return 0;}
 		if (listItemA.value < listItemB.value) {return 1;}
 	});	
-	console.log({lowPriorityOrder});
-	console.log({activeList});
-	mainList.textContent = "";
-	let number = 1;
-	for (let i = 0; i < lowPriorityOrder.length; i++) {
-		lowPriorityOrder[i].index = number;
-		displayListItem(lowPriorityOrder[i]);		
-		number++;
-	}
-	//return lowPriorityOrder;
+	displayReorderedList(lowPriorityOrder);
+}
+//NON-DOM:
+function getIncompleteFirstOrder(activeList) {	
+	let incompleteFirstOrder = activeList.contents.sort((listItemA, listItemB) => { 
+			if (listItemA.completeValue < listItemB.completeValue) return 1;
+	});
+	displayReorderedList(incompleteFirstOrder);
 }
 
-
-//formula for arranging by complete status - incomplete first:
-/*myListsArray.forEach(listObject => {	
-	let incompleteFirstOrder = listObject.contents.sort((listItemA, listItemB) => { 
-			if (listItemA.completeValue < listItemB.completeValue) return 1;
-		});
-		console.log({incompleteFirstOrder});
-});*/
-
-//formula for arranging by complete status - complete first:
-myListsArray.forEach(listObject => {	
-	let completeFirstOrder = listObject.contents.sort((listItemA, listItemB) => { 
+//NON-DOM:
+function getCompleteFirstOrder(activeList) {	
+	let completeFirstOrder = activeList.contents.sort((listItemA, listItemB) => { 
 			if (listItemA.completeValue > listItemB.completeValue) return 1;
-		});
-		console.log({completeFirstOrder});
-});
+	});
+	displayReorderedList(completeFirstOrder);
+}
+
+//NON-DOM:
+function getEarliestDateFirst(activeList) {
+	console.log({activeList});
+	let earliestFirstOrder = activeList.contents.sort((listItemA, listItemB) => { 
+		if (listItemA.dueDate > listItemB.dueDate) {return 1;}
+		if (listItemA.dueDate == listItemB.dueDate){return 0;}
+		if (listItemA.dueDate < listItemB.dueDate) {return -1;}
+	});
+	console.log({earliestFirstOrder});
+	displayReorderedList(earliestFirstOrder);
+}
+
+//NON-DOM:
+function getLatestDateFirst(activeList) {
+	let latestFirstOrder = activeList.contents.sort((listItemA, listItemB) => { 
+		if (listItemA.dueDate > listItemB.dueDate) {return -1;}
+		if (listItemA.dueDate == listItemB.dueDate){return 0;}
+		if (listItemA.dueDate < listItemB.dueDate) {return 1;}
+	});;
+	console.log({latestFirstOrder});
+	displayReorderedList(latestFirstOrder);
+}
+
