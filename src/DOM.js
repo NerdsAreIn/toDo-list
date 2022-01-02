@@ -1,5 +1,6 @@
 import {listItem} from './manageToDoItems.js';
 import {list} from './manageLists.js';
+import {addMobileStyles, widthTrigger} from './media-queries.js';
 
 const addItemButton = document.getElementById("addButton");
 const nameField = document.getElementById("nameField");
@@ -62,7 +63,9 @@ window.onload = () => {
 	else listNames = ["Main"];
 	createListElements(listNames);	
 	loadDefaultList();
+	addMobileStyles(widthTrigger);
 };
+widthTrigger.addEventListener("change", addMobileStyles);
 
 //DOM:
 function createListElements(listNames) {
@@ -297,7 +300,7 @@ function displayListItem(item) {
     mainList.appendChild(newItem);	
 }
 
-export {displayListItem, myListsArray};
+export {displayListItem, myListsArray, listTitle};
 
 const sortBox = document.getElementById("sortBox");
 
