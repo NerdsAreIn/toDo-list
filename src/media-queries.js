@@ -6,25 +6,27 @@ const sidebar = document.getElementById("lists-sidebar");
 const addItemBox = document.getElementById("addItemBox");
 const widthTrigger = window.matchMedia("screen and (max-width: 750px)");
 const sortBox = document.getElementById("sortBox");
+let viewListsButton;
+let openAddItemBoxButton;
 
 function addMobileClass() {
     mainBox.classList.add("mobile");
-    sidebar.classList.add("mobile");
-    addItemBox.classList.add("mobile");
+    sidebar.classList.add("mobile-slide");
+    addItemBox.classList.add("mobile-slide");
     sortBox.classList.add("mobile");
 }
 
 function removeMobileClass() {
     mainBox.classList.remove("mobile");
-    sidebar.classList.remove("mobile");
-    addItemBox.classList.remove("mobile");
+    sidebar.classList.remove("mobile-slide");
+    addItemBox.classList.remove("mobile-slide");
     sortBox.classList.remove("mobile");
 }
 
 function createMobileButtons() {
     const innerNav = document.createElement("nav");
-    const viewListsButton = document.createElement("button");
-    const openAddItemBoxButton = document.createElement("button");
+    viewListsButton = document.createElement("button");
+    openAddItemBoxButton = document.createElement("button");
     viewListsButton.textContent = "View Lists";
     openAddItemBoxButton.textContent = "Add To-Do Item"
     innerNav.id = "innerNav";    
@@ -32,6 +34,8 @@ function createMobileButtons() {
     openAddItemBoxButton.className = "mobile-button"; 
     innerNav.appendChild(viewListsButton);
     innerNav.appendChild(openAddItemBoxButton);
+    openAddItemBoxButton.addEventListener("click", openAddItemBox);
+    viewListsButton.addEventListener("click", viewLists);
     return innerNav;
 }
 
@@ -50,5 +54,15 @@ function addMobileStyles(x) {
         document.body.insertBefore(mainTitle, sidebar);
     }
 }
+
+function viewLists() {
+    sidebar.classList.add("visible");
+}
+
+function openAddItemBox() {
+    addItemBox.classList.add("visible");
+}
+
+
 
 export {addMobileStyles, widthTrigger};
