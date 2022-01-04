@@ -14,6 +14,7 @@ function addMobileClass() {
     sidebar.classList.add("mobile-slide");
     addItemBox.classList.add("mobile-slide");
     sortBox.classList.add("mobile");
+    document.body.classList.add("mobile-slide");
 }
 
 function removeMobileClass() {
@@ -39,14 +40,24 @@ function createMobileButtons() {
     return innerNav;
 }
 
+function createTopNavBar() {
+    const topNavBar = document.createElement("div");
+    topNavBar.id = "topNavBar";
+    document.body.appendChild(topNavBar);
+    topNavBar.appendChild(mainTitle);       
+    topNavBar.appendChild(createMobileButtons());   
+}
+
+function createOverlay() {
+    const overlay = document.createElement("div");
+    overlay.id = "overlay";
+    document.body.appendChild(overlay);
+}
+
 function addMobileStyles(x) {
     if (x.matches) {
         addMobileClass();       
-        const topNavBar = document.createElement("div");
-        topNavBar.id = "topNavBar";
-        document.body.appendChild(topNavBar);
-        topNavBar.appendChild(mainTitle);       
-        topNavBar.appendChild(createMobileButtons());               
+        createTopNavBar();             
     }
     else {
         removeMobileClass();
@@ -55,14 +66,32 @@ function addMobileStyles(x) {
     }
 }
 
+let closeButton = document.createElement("button");
+    closeButton.className = "close-button";
+    closeButton.textContent = "Close";
+
+function createCloseButton(popup) {
+    if (popup.contains(closeButton)) return;
+    else return closeButton;    
+}
+
 function viewLists() {
-    sidebar.classList.add("visible");
+    sidebar.classList.add("visible");    
+    sidebar.appendChild(createCloseButton(sidebar));
+    closeButton.addEventListener("click", () => closePopup(sidebar));
+    createOverlay();
+}
+
+function closePopup(popup) {
+    popup.classList.remove("visible");
+    document.body.removeChild(overlay);
 }
 
 function openAddItemBox() {
     addItemBox.classList.add("visible");
+    addItemBox.appendChild(createCloseButton(addItemBox));    
+    closeButton.addEventListener("click", () => closePopup(addItemBox));
+    createOverlay();
 }
-
-
 
 export {addMobileStyles, widthTrigger};
