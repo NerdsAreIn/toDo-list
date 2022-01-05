@@ -6,21 +6,27 @@ const sidebar = document.getElementById("lists-sidebar");
 const addItemBox = document.getElementById("addItemBox");
 const widthTrigger = window.matchMedia("screen and (max-width: 750px)");
 const sortBox = document.getElementById("sortBox");
+
 let viewListsButton;
 let openAddItemBoxButton;
+let overlay;
+let closeButton = document.createElement("button");
+closeButton.className = "close-button";
+closeButton.textContent = "Close";
 
 function addMobileClass() {
     mainBox.classList.add("mobile");
     sidebar.classList.add("mobile-slide");
     addItemBox.classList.add("mobile-slide");
     sortBox.classList.add("mobile");
-    document.body.classList.add("mobile-slide");
 }
 
 function removeMobileClass() {
     mainBox.classList.remove("mobile");
     sidebar.classList.remove("mobile-slide");
     addItemBox.classList.remove("mobile-slide");
+    addItemBox.classList.remove("visible");
+    sidebar.classList.remove("visible");
     sortBox.classList.remove("mobile");
 }
 
@@ -49,9 +55,14 @@ function createTopNavBar() {
 }
 
 function createOverlay() {
-    const overlay = document.createElement("div");
-    overlay.id = "overlay";
-    document.body.appendChild(overlay);
+    if (document.body.contains(overlay)) return;
+    else {
+        setTimeout(() => {
+            overlay = document.createElement("div");
+            overlay.id = "overlay";
+            document.body.appendChild(overlay);
+        }, 200);
+    }
 }
 
 function addMobileStyles(x) {
@@ -63,35 +74,34 @@ function addMobileStyles(x) {
         removeMobileClass();
         document.body.removeChild(topNavBar);
         document.body.insertBefore(mainTitle, sidebar);
+        if (document.body.contains(overlay)) {
+            document.body.removeChild(overlay);
+        }
+        if (document.body.contains(closeButton)) {
+            closeButton.remove();
+        }
     }
-}
-
-let closeButton = document.createElement("button");
-    closeButton.className = "close-button";
-    closeButton.textContent = "Close";
-
-function createCloseButton(popup) {
-    if (popup.contains(closeButton)) return;
-    else return closeButton;    
 }
 
 function viewLists() {
     sidebar.classList.add("visible");    
-    sidebar.appendChild(createCloseButton(sidebar));
+    if (!sidebar.contains(closeButton)) sidebar.appendChild(closeButton);
     closeButton.addEventListener("click", () => closePopup(sidebar));
+    createOverlay();
+}
+
+function openAddItemBox() {
+    addItemBox.classList.add("visible");
+    if (!addItemBox.contains(closeButton)) addItemBox.appendChild(closeButton);    
+    closeButton.addEventListener("click", () => closePopup(addItemBox));
     createOverlay();
 }
 
 function closePopup(popup) {
     popup.classList.remove("visible");
-    document.body.removeChild(overlay);
-}
-
-function openAddItemBox() {
-    addItemBox.classList.add("visible");
-    addItemBox.appendChild(createCloseButton(addItemBox));    
-    closeButton.addEventListener("click", () => closePopup(addItemBox));
-    createOverlay();
+    if (document.body.contains(overlay)) {
+        document.body.removeChild(overlay);
+    }
 }
 
 export {addMobileStyles, widthTrigger};
