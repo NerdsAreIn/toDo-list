@@ -7,4 +7,9 @@ function listItem(name, description, dueDate, priority) {
 	this.completeValue = 10;
 	return this;
 }
-export {listItem};
+
+function getIndex(listItemObject) {
+	return listItemObject.index;
+}
+
+export {listItem, getIndex};
