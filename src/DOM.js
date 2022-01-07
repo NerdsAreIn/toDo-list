@@ -17,25 +17,6 @@ let myListsArray = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LISTS_OBJECT)) 
 
 widthTrigger.addEventListener("change", addMobileStyles);
 
-
-window.onload = () => {
-	console.log({myListsArray});
-	if (myListsArray.length == 0) {
-		const first = new list("Main");
-		first.active = true;	
-	}	
-    if (localStorage.getItem("listNames2")) {
-		// will already include "main" as first item:
-		listNames = localStorage.getItem("listNames2").split(",");
-	}
-	// first time app is used:
-	else listNames = ["Main"];
-	createListElements(listNames);	
-	loadDefaultList();
-	addMobileStyles(widthTrigger);
-};
-
-
 //DOM:
 function createListElements(listNames) {
 	for (let i = 1; i < listNames.length; i++) {
@@ -133,4 +114,4 @@ function setListEventHandlers() {
 	populateStorage();		
 }
 
-export {myListsArray, listTitle, mainList, listElements};
+export {myListsArray, listTitle, mainList, listElements, loadDefaultList, createListElements};
