@@ -1,10 +1,12 @@
 import {listElements, myListsArray, createListElements, loadDefaultList} from './DOM.js';
 import {addMobileStyles, widthTrigger} from './media-queries.js';
+import {list} from './manageLists.js';
 
 let listNames;
 let LOCAL_STORAGE_LISTS_OBJECT = "task.myListsArray";
 
 window.onload = () => {
+	//populateStorage();
 	console.log({myListsArray});
 	if (myListsArray.length == 0) {
 		const first = new list("Main");
@@ -37,5 +39,7 @@ function populateStorage() {
     localStorage.setItem(LOCAL_STORAGE_LISTS_OBJECT, JSON.stringify(myListsArray));
 	console.log("populated!");	
 }
+
+window.addEventListener("unload", populateStorage);
 
 export {populateStorage, listNames, setListNames, LOCAL_STORAGE_LISTS_OBJECT};

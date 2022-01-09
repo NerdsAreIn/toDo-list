@@ -1,6 +1,7 @@
 import {listItem, getIndex} from "./manageToDoItems.js";
 import {myListsArray, mainList} from "./DOM.js";
 import {assignPriority, priority} from "./priority.js";
+import { populateStorage } from "./localStorage.js";
 
 const addItemButton = document.getElementById("addButton");
 const nameField = document.getElementById("nameField");
@@ -14,16 +15,19 @@ function clearFields() {
 
 addItemButton.onclick = () => {
 	let item = new listItem(nameField.value, descripField.value, dueField.value, priority);
+	console.log({myListsArray});
 	myListsArray.forEach(listObject => {
 		if (listObject.active == true) {
+			console.log({listObject});
 			listObject.contents.push(item);
 			setItemIndices(listObject);	
 			displayListItem(item);
-			configItemDeleteButtons(listObject);
-			configCheckBoxes(listObject);
+			configItemDeleteButtons(listObject);			
 		}
 	});  	
-    clearFields();   
+	//localStorage.clear();
+    //populateStorage();
+	clearFields();   
 }
 
 function setItemIndices(listObject) {
@@ -46,7 +50,7 @@ function configItemDeleteButtons(listObject) {
 				}				       
 			} 
 			e.target.parentElement.parentElement.remove(); 
-			configCheckBoxes(listObject);
+			configCheckBoxes();
 			let mainListArray = Array.from(mainList.children);
 			for (let i = 0; i < listObject.contents.length; i++) {    
 				mainListArray[i].id = getIndex(listObject.contents[i]);
@@ -55,30 +59,44 @@ function configItemDeleteButtons(listObject) {
 	});	       
 }
 
-function configCheckBoxes(listObject) {
+function configCheckBoxes() {
 	let checkboxes = [...mainList.getElementsByClassName("checkbox")];
-	let targetItem;
+	console.log({checkboxes});                 
 	checkboxes.forEach(checkbox => {
-		checkbox.addEventListener("click", (e) => {
-			checkbox.parentElement.parentElement.parentElement.firstChild.firstChild.firstChild.classList.toggle("complete");
-			checkbox.parentElement.parentElement.parentElement.firstChild.firstChild.children[1].classList.toggle("complete");
-			targetItem = listObject.contents.find(listItem => listItem.index == checkbox.parentElement.parentElement.parentElement.id);
-			if (targetItem.complete == false) {
-				targetItem.complete = true;	
-				targetItem.completeValue = 0;		
-			}
-			else if (targetItem.complete == true) {
-				targetItem.complete = false;
-				targetItem.completeValue = 10;
-			}
-		});
+		console.log("added");
+		checkbox.removeEventListener("click", respondToClick);
+		checkbox.addEventListener("click", e => respondToClick(e));		 
 	});
+	//localStorage.clear();
+	//populateStorage();
+}
+
+function respondToClick(e) {
+		//e.stopPropagation();
+		console.log("checked");
+		console.log(e.target);
+		let targetItem;
+		let activeList = myListsArray.find(list => list.active == true);
+		console.log({activeList});
+		e.target.parentElement.parentElement.parentElement.firstChild.firstChild.firstChild.classList.toggle("complete");
+		e.target.parentElement.parentElement.parentElement.firstChild.firstChild.children[1].classList.toggle("complete");
+		targetItem = activeList.contents.find(listItem => listItem.index == e.target.parentElement.parentElement.parentElement.id);
+		console.log({targetItem});
+		if (targetItem.complete == false) {
+			targetItem.complete = true;	
+			targetItem.completeValue = 0;		
+		}
+		else if (targetItem.complete == true) {
+			targetItem.complete = false;
+			targetItem.completeValue = 10;
+		}
 }
 
 function displayListItem(item) {
 	console.log("displayed item");
+	console.log({myListsArray});
 	const newItem = document.createElement("li");
-	newItem.id = getIndex(item);	
+	newItem.id = getIndex(item);
 	newItem.classList.add("listItem");
 	assignPriority(newItem, item);
 	newItem.innerHTML = createItemContent(item);

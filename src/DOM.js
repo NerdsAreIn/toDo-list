@@ -22,8 +22,8 @@ function createListElements(listNames) {
 		listElement.id = listNames[i];     
 		listElements.push(listElement);
 		listOfLists.appendChild(listElement);
-		configListDeleteButtons();
 		setListEventHandlers();
+		configListDeleteButtons();		
 	}
 }
 
@@ -62,7 +62,7 @@ function loadDefaultList() {
 		displayListItem(listItemObject);
 	});
 	configItemDeleteButtons(myListsArray[0]);
-	configCheckBoxes(myListsArray[0]);
+	configCheckBoxes();
 }
 
 addListButton.onclick = () => {
@@ -94,7 +94,7 @@ function setListEventHandlers() {
 						displayListItem(listItemObject);
 					});
 					configItemDeleteButtons(listObject);
-					configCheckBoxes(listObject);
+					configCheckBoxes();
 				}
 				else  {
 					listObject.active = false;
