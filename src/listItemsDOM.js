@@ -71,7 +71,6 @@ function configCheckBoxes(listObject) {
 				targetItem.complete = false;
 				targetItem.completeValue = 10;
 			}
-			console.log({targetItem});
 		});
 	});
 }
