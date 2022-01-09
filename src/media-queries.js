@@ -1,5 +1,3 @@
-import {listTitle} from './DOM.js';
-
 const mainTitle = document.querySelector("h1");
 const mainBox = document.getElementById("mainBox");
 const sidebar = document.getElementById("lists-sidebar");
@@ -103,5 +101,7 @@ function closePopup(popup) {
         document.body.removeChild(overlay);
     }
 }
+
+widthTrigger.addEventListener("change", addMobileStyles);
 
 export {addMobileStyles, widthTrigger};

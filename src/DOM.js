@@ -1,8 +1,8 @@
 import {list} from './manageLists.js';
-import {addMobileStyles, widthTrigger} from './media-queries.js';
-import { populateStorage, listNames, setListNames, LOCAL_STORAGE_LISTS_OBJECT} from './localStorage.js';
+import {populateStorage, listNames, setListNames, LOCAL_STORAGE_LISTS_OBJECT} from './localStorage.js';
 import {configCheckBoxes, configItemDeleteButtons, setItemIndices, displayListItem} from './listItemsDOM.js'
 
+//OL:
 const mainList = document.querySelector("#mainlist");
 //list element object:
 const main = document.getElementById("main");
@@ -15,9 +15,6 @@ const listOfLists = document.getElementById("mylists");
 let listElements = [main];
 let myListsArray = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LISTS_OBJECT)) || [];
 
-widthTrigger.addEventListener("change", addMobileStyles);
-
-//DOM:
 function createListElements(listNames) {
 	for (let i = 1; i < listNames.length; i++) {
         const listElement = document.createElement("li");	
@@ -30,14 +27,13 @@ function createListElements(listNames) {
 	}
 }
 
-//DOM:
 function clearListOfLists() {
 	while (listOfLists.hasChildNodes()) {
 		listOfLists.firstChild.remove();
 	}
 	return;
 }
-//DOM:
+
 function configListDeleteButtons() {
 	let deleteArray2 = [...listOfLists.getElementsByClassName("delete-li")];
 	deleteArray2.forEach(deleteButton => {
@@ -59,7 +55,6 @@ function configListDeleteButtons() {
 	});
 }
 
-//DOM:
 function loadDefaultList() {
 	myListsArray[0].active = true;
 	setItemIndices(myListsArray[0]);	
@@ -70,14 +65,12 @@ function loadDefaultList() {
 	configCheckBoxes(myListsArray[0]);
 }
 
-//DOM:
 addListButton.onclick = () => {
     let newList = new list(nameInput.value);
     displayListElement(newList);
     nameInput.value = ""
 }
 
-//DOM:
 function displayListElement(list) {
 	const listElement = document.createElement("li");	
     listElement.innerHTML = '<a href="#">' + list.name + '</a><button class="delete-li">X</button>';  
@@ -88,7 +81,6 @@ function displayListElement(list) {
     setListEventHandlers();
 }
 
-//DOM:
 function setListEventHandlers() {
 	listElements.forEach(listElement => {		
 		listElement.onclick = () => {		
