@@ -6,8 +6,6 @@ let listNames;
 let LOCAL_STORAGE_LISTS_OBJECT = "task.myListsArray";
 
 window.onload = () => {
-	//populateStorage();
-	console.log({myListsArray});
 	if (myListsArray.length == 0) {
 		const first = new list("Main");
 		first.active = true;	

@@ -58,17 +58,24 @@ list-style-type: Arabic;
 padding: 4px 2px 1px 3px;
 }
 #clearButton {
-margin: 25px 0 20px;
+margin: 25px 0 5vh;
 position: absolute;
 left: 5%;
+padding: 7px 10px;
 background-color: transparent;
 border: none;
 cursor: pointer;
 font-weight: bold;
 color: inherit;
-/*text-decoration: underline solid blue 1px;*/
 font-size: 0.95rem;
 text-shadow: 1px 1px 0px white, -1px -1px 0px white,  1px 1px 0 blue, -1px -1px 0 blue;
+}
+#clearButton:hover {
+background-color: azure;
+border-radius: 20px;
+}
+#clearButton:focus {
+outline: none;
 }
 .toDoBox {
 position: relative;    
@@ -79,9 +86,16 @@ font-weight: bold;
 margin-bottom: 7px;
 font-size: 1.1rem;
 transition: text-decoration 1s;
+word-wrap: break-word;
 }
-summary.complete, details p.complete {
+details p {
+word-wrap: break-word;
+}
+summary.complete {
 text-decoration: line-through black 4px;
+}
+details p.complete {
+text-decoration: line-through black 2px;
 }
 p {
 margin: 10px 0;
@@ -117,13 +131,6 @@ margin-right: 10px;
 font-variant: small-caps;
 font-size: 1.2rem;
 }
-/* !FOR SOME REASON, I CAN'T REMOVE THE AUTO-STYLING GREY/BLUE BACKGROUND WHEN HOVERING...! */
-#sortBox option:hover {
-background-color: aquamarine;
-}
-option:hover {
-background-color: aquamarine;
-}
 select {
 background-color: azure;
 color: var(--myBlue);
@@ -152,6 +159,7 @@ input {
 margin: 6px 0;
 font-size: 0.85rem;
 padding: 3px 2px;
+letter-spacing: 1px;
 }
 .colour-code {
 width: 13px;
@@ -355,8 +363,8 @@ box-sizing: border-box;
 color: dodgerblue;
 background-color: white;
 border: 3px solid dodgerblue;
-height: max(7vh, 35px);
-width: 50px;
+height: max(7vh, 37px);
+width: 75px;
 padding: 6px;
 vertical-align: middle;
 border-radius: 5px;

@@ -26,7 +26,7 @@ sortBox.addEventListener("click", function getOrder(e) {
 		break;
 	}
 	configItemDeleteButtons(activeList);
-	configCheckBoxes(activeList);
+	configCheckBoxes();
 });
 
 function displayReorderedList(currentListOrder) {
