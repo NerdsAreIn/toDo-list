@@ -1,7 +1,6 @@
 import {listItem, getIndex} from "./manageToDoItems.js";
 import {myListsArray, mainList} from "./DOM.js";
 import {assignPriority, priority} from "./priority.js";
-import { populateStorage } from "./localStorage.js";
 
 const addItemButton = document.getElementById("addButton");
 const nameField = document.getElementById("nameField");
@@ -15,18 +14,15 @@ function clearFields() {
 
 addItemButton.onclick = () => {
 	let item = new listItem(nameField.value, descripField.value, dueField.value, priority);
-	console.log({myListsArray});
 	myListsArray.forEach(listObject => {
 		if (listObject.active == true) {
-			console.log({listObject});
 			listObject.contents.push(item);
 			setItemIndices(listObject);	
 			displayListItem(item);
-			configItemDeleteButtons(listObject);			
+			configItemDeleteButtons(listObject);
+			configCheckBoxes();			
 		}
 	});  	
-	//localStorage.clear();
-    //populateStorage();
 	clearFields();   
 }
 
@@ -60,28 +56,19 @@ function configItemDeleteButtons(listObject) {
 }
 
 function configCheckBoxes() {
-	let checkboxes = [...mainList.getElementsByClassName("checkbox")];
-	console.log({checkboxes});                 
+	let checkboxes = [...mainList.getElementsByClassName("checkbox")];	   
 	checkboxes.forEach(checkbox => {
-		console.log("added");
 		checkbox.removeEventListener("click", respondToClick);
-		checkbox.addEventListener("click", e => respondToClick(e));		 
+		checkbox.addEventListener("click", respondToClick);
 	});
-	//localStorage.clear();
-	//populateStorage();
 }
 
 function respondToClick(e) {
-		//e.stopPropagation();
-		console.log("checked");
-		console.log(e.target);
 		let targetItem;
 		let activeList = myListsArray.find(list => list.active == true);
-		console.log({activeList});
 		e.target.parentElement.parentElement.parentElement.firstChild.firstChild.firstChild.classList.toggle("complete");
 		e.target.parentElement.parentElement.parentElement.firstChild.firstChild.children[1].classList.toggle("complete");
 		targetItem = activeList.contents.find(listItem => listItem.index == e.target.parentElement.parentElement.parentElement.id);
-		console.log({targetItem});
 		if (targetItem.complete == false) {
 			targetItem.complete = true;	
 			targetItem.completeValue = 0;		
@@ -92,16 +79,14 @@ function respondToClick(e) {
 		}
 }
 
-function displayListItem(item) {
-	console.log("displayed item");
-	console.log({myListsArray});
-	const newItem = document.createElement("li");
-	newItem.id = getIndex(item);
-	newItem.classList.add("listItem");
-	assignPriority(newItem, item);
-	newItem.innerHTML = createItemContent(item);
-	if (item.complete == true) markComplete(newItem);
-    mainList.appendChild(newItem);	
+function displayListItem(itemObject) {
+	const itemElement = document.createElement("li");
+	itemElement.id = getIndex(itemObject);
+	itemElement.classList.add("listItem");
+	assignPriority(itemElement, itemObject);
+	itemElement.innerHTML = createItemContent(itemObject);
+	if (itemObject.complete == true) markComplete(itemElement);
+    mainList.appendChild(itemElement);	
 }
 
 function createItemContent(item) {
@@ -113,7 +98,7 @@ function createItemContent(item) {
 
 function markComplete(itemElement) {
 	itemElement.firstChild.firstChild.firstChild.classList.add("complete");
-	itemElement.firstChild.firstChild.children[1].classList.add("complete")
+	itemElement.firstChild.firstChild.children[1].classList.add("complete");
 	let checkbox = itemElement.querySelector(".checkbox");
 	checkbox.setAttribute("checked", true);	
 }

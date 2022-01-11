@@ -17,7 +17,7 @@
 				  </li>	
 				</ul>
 			</nav>
-			<input type="text" id="listName" placeholder="Type name here..." name="listName" value="">
+			<input type="text" maxlength="40" id="listName" placeholder="Type name here..." name="listName" value="">
             <button id="addListButton">Create New List</button><br>
 		</div>
 		<div id="mainBox">
@@ -41,8 +41,8 @@
 		<div id="addItemBox">
 			<fieldset>
 				<legend>Create a To-do Item</legend>
-				<label>Item name: <input type="text" id="nameField" class="textfield" name="name" value="" required></label><br>
-				<label>Item description: <input type="text" class="textfield" id="descripField" name="description" value=""></label><br>
+				<label>Item name: <input type="text" maxlength="55" id="nameField" class="textfield" name="name" value="" required></label><br>
+				<label>Item description: <input type="text" maxlength="320" class="textfield" id="descripField" name="description" value=""></label><br>
 				<label>Item due date: <input type="date" class="textfield" id="dueField" name="due" value="" required></label><br>
 				<h4>Item priority: </h4>
 					<label>High <input type="radio" class="priority" name="priority" value="high"></label><div id="red-box" class="colour-code"></div><br>
