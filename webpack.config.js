@@ -7,6 +7,7 @@ module.exports = {
     ignored: /node_modules/,
  },
   entry: './src/index.js',
+  cache: false,
   mode: 'development',
   output: {
     filename: 'main.js',
