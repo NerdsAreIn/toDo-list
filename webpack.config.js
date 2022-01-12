@@ -5,9 +5,9 @@ module.exports = {
     aggregateTimeout: 1000,
     poll: 1000,
     ignored: /node_modules/,
+    cache: false,
  },
   entry: './src/index.js',
-  cache: false,
   mode: 'development',
   output: {
     filename: 'main.js',
