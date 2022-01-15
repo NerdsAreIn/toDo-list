@@ -44,8 +44,8 @@ background-color: azure;
 height: var(--variableHeight2);
 position: fixed;
 top: 0;
-padding: 15px 0 12px;
-border-bottom: 5px solid blue;
+padding: 3vh 0 12px;
+border-bottom: 3px solid blue;
 box-shadow: 0px -5px 10px 5px white inset;
 z-index: 3;
 }
@@ -137,7 +137,6 @@ z-index: 2;
 left: 67vw;
 width: fit-content;
 border: 2px solid red;
-height: max-content;
 padding: 0;
 }
 /*#sortBox {
@@ -288,6 +287,7 @@ border: 1px solid black;
 border-radius: 30%;
 }
 #topNavBar {
+box-sizing: border-box;
 width: 100%;
 border-bottom: 3px solid blue;
 position: fixed;
@@ -295,8 +295,9 @@ top: 0;
 height: var(--variableHeight);
 z-index: 3;
 text-align: center;
-background-color: var(--myYellow);
+background-color: azure;
 overflow: auto;
+padding-top: 17px;
 }
 #mainBox.mobile {
 width: 80vw;
@@ -360,7 +361,7 @@ border-radius: 4px;
 background-color: blue;
 }
 .mobile-button {
-background-color: azure;
+background-color: aliceblue;
 color: var(--myBlue);
 width: 50%;
 float: left;

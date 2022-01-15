@@ -1,9 +1,12 @@
 const mainTitle = document.querySelector("h1");
+const ribbon = document.getElementById("title-bar");
 const mainBox = document.getElementById("mainBox");
-const sidebar = document.getElementById("lists-sidebar");
+const leftSidebar = document.getElementById("lists-sidebar");
+const rightSidebar = document.getElementById("right-sidebar");
 const addItemBox = document.getElementById("addItemBox");
-const widthTrigger = window.matchMedia("screen and (max-width: 750px)");
 const sortBox = document.getElementById("sortBox");
+const widthTrigger = window.matchMedia("screen and (max-width: 750px)");
+
 
 let viewListsButton;
 let openAddItemBoxButton;
@@ -14,18 +17,18 @@ closeButton.textContent = "Close";
 
 function addMobileClass() {
     mainBox.classList.add("mobile");
-    sidebar.classList.add("mobile-slide");
+    leftSidebar.classList.add("mobile-slide");
     addItemBox.classList.add("mobile-slide");
     sortBox.classList.add("mobile");
 }
 
 function removeMobileClass() {
     mainBox.classList.remove("mobile");
-    sidebar.classList.remove("mobile-slide");
+    leftSidebar.classList.remove("mobile-slide");
     addItemBox.classList.remove("mobile-slide");
     addItemBox.classList.remove("visible");
-    sidebar.classList.remove("visible");
-    sortBox.classList.remove("mobile");
+    leftSidebar.classList.remove("visible");
+    sortBox.classList.remove("mobile");    
 }
 
 function createMobileButtons() {
@@ -65,13 +68,20 @@ function createOverlay() {
 
 function addMobileStyles(x) {
     if (x.matches) {
-        addMobileClass();       
-        createTopNavBar();             
+        addMobileClass();    
+        rightSidebar.remove();
+        ribbon.remove();    
+        createTopNavBar();
+        document.body.appendChild(sortBox);                          
     }
     else {
         removeMobileClass();
+        document.body.appendChild(rightSidebar);
+        rightSidebar.appendChild(sortBox);
+        rightSidebar.appendChild(addItemBox);
         document.body.removeChild(topNavBar);
-        document.body.insertBefore(mainTitle, sidebar);
+        document.body.appendChild(ribbon);
+        ribbon.appendChild(mainTitle);
         if (document.body.contains(overlay)) {
             document.body.removeChild(overlay);
         }
@@ -82,9 +92,9 @@ function addMobileStyles(x) {
 }
 
 function viewLists() {
-    sidebar.classList.add("visible");    
-    if (!sidebar.contains(closeButton)) sidebar.appendChild(closeButton);
-    closeButton.addEventListener("click", () => closePopup(sidebar));
+    leftSidebar.classList.add("visible");    
+    if (!leftSidebar.contains(closeButton)) leftSidebar.appendChild(closeButton);
+    closeButton.addEventListener("click", () => closePopup(leftSidebar));
     createOverlay();
 }
 
