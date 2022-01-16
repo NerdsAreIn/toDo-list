@@ -44,7 +44,7 @@ background-color: azure;
 height: var(--variableHeight2);
 position: fixed;
 top: 0;
-padding: 3vh 0 12px;
+padding: 3.5vh 0 12px;
 border-bottom: 3px solid blue;
 box-shadow: 0px -5px 10px 5px white inset;
 z-index: 3;
@@ -278,7 +278,7 @@ border-radius: 30%;
 #topNavBar {
 box-sizing: border-box;
 width: 100%;
-border-bottom: 3px solid blue;
+border-bottom: 2px solid blue;
 position: fixed;
 top: 0;
 height: var(--variableHeight);
@@ -286,7 +286,7 @@ z-index: 4;
 text-align: center;
 background-color: azure;
 overflow: auto;
-padding-top: 17px;
+padding-top: 18px;
 }
 #mainBox.mobile {
 width: 80vw;
@@ -342,9 +342,8 @@ position: absolute;
 bottom: 0;
 height: 37%;
 margin: 0 10%;
-border-top: 2px solid blue;
-border-left: 2px solid blue;
-border-right: 2px solid blue;
+border: 1px solid blue;
+border-bottom: none;
 border-radius: 4px;
 background-color: blue;
 }
