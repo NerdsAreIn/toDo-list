@@ -7,7 +7,6 @@ const addItemBox = document.getElementById("addItemBox");
 const sortBox = document.getElementById("sortBox");
 const widthTrigger = window.matchMedia("screen and (max-width: 750px)");
 
-
 let viewListsButton;
 let openAddItemBoxButton;
 let overlay;
