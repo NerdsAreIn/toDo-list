@@ -68,11 +68,12 @@ function createOverlay() {
 
 function addMobileStyles(x) {
     if (x.matches) {
-        addMobileClass();    
         rightSidebar.remove();
+        addMobileClass(); 
         ribbon.remove();    
         createTopNavBar();
-        document.body.appendChild(sortBox);                          
+        document.body.appendChild(sortBox);
+        document.body.appendChild(addItemBox);                          
     }
     else {
         removeMobileClass();
