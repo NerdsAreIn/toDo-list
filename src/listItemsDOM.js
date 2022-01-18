@@ -24,7 +24,7 @@ addItemButton.onclick = () => {
 		}
 	});  	
 	clearFields();   
-}
+};
 
 function setItemIndices(listObject) {
 	let number = 1;
@@ -90,8 +90,8 @@ function displayListItem(itemObject) {
 }
 
 function createItemContent(item) {
-	return '<div class="toDoBox"><details><summary>'
-	 + item.name + '</summary><p>' + item.description + 
+	return '<div class="toDoBox"><details><summary>'+ 
+	item.name + '</summary><p>' + item.description + 
 	 '</p></details><p class="dueDate">Due date: ' + item.dueDate + 
 	 '</p><label class="completeLabel">Completed: <input type="checkbox" class="checkbox" name="completed" value=""></label><button class="delete">X</button></div>';    
 }

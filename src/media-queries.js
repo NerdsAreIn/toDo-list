@@ -11,6 +11,7 @@ let viewListsButton;
 let openAddItemBoxButton;
 let overlay;
 let closeButton = document.createElement("button");
+let topNavBar;
 closeButton.className = "close-button";
 closeButton.textContent = "Close";
 
@@ -35,7 +36,7 @@ function createMobileButtons() {
     viewListsButton = document.createElement("button");
     openAddItemBoxButton = document.createElement("button");
     viewListsButton.textContent = "View Lists";
-    openAddItemBoxButton.textContent = "Add To-Do Item"
+    openAddItemBoxButton.textContent = "Add To-Do Item";
     innerNav.id = "innerNav";    
     viewListsButton.className = "mobile-button";  
     openAddItemBoxButton.className = "mobile-button"; 
@@ -47,7 +48,7 @@ function createMobileButtons() {
 }
 
 function createTopNavBar() {
-    const topNavBar = document.createElement("div");
+    topNavBar = document.createElement("div");
     topNavBar.id = "topNavBar";
     document.body.appendChild(topNavBar);
     topNavBar.appendChild(mainTitle);       

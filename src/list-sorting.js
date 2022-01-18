@@ -85,7 +85,7 @@ function getLatestDateFirst(activeList) {
 		if (listItemA.dueDate > listItemB.dueDate) {return -1;}
 		if (listItemA.dueDate == listItemB.dueDate){return 0;}
 		if (listItemA.dueDate < listItemB.dueDate) {return 1;}
-	});;
+	});
 	displayReorderedList(latestFirstOrder);
 }
 

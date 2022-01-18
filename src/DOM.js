@@ -1,6 +1,6 @@
 import {list} from './manageLists.js';
 import {populateStorage, listNames, setListNames, LOCAL_STORAGE_LISTS_OBJECT} from './localStorage.js';
-import {configCheckBoxes, configItemDeleteButtons, setItemIndices, displayListItem} from './listItemsDOM.js'
+import {configCheckBoxes, configItemDeleteButtons, setItemIndices, displayListItem} from './listItemsDOM.js';
 
 //OL:
 const mainList = document.querySelector("#mainlist");
@@ -68,8 +68,8 @@ function loadDefaultList() {
 addListButton.onclick = () => {
     let newList = new list(nameInput.value);
     displayListElement(newList);
-    nameInput.value = ""
-}
+    nameInput.value = "";
+};
 
 function displayListElement(list) {
 	const listElement = document.createElement("li");	
