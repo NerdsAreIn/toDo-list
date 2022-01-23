@@ -1,11 +1,11 @@
-import {myListsArray} from "./DOM.js";
+import { myListsArray } from "./DOM.js";
 
 function list(name) {
-	this.name = name;
-    this.contents = [];
-    this.active = false;   
-    myListsArray.push(this);
-    return this;
+  this.name = name;
+  this.contents = [];
+  this.active = false;
+  myListsArray.push(this);
+  return this;
 }
 
-export {list};
+export { list };

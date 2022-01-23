@@ -28,7 +28,7 @@ function removeMobileClass() {
     addItemBox.classList.remove("mobile-slide");
     addItemBox.classList.remove("visible");
     leftSidebar.classList.remove("visible");
-    sortBox.classList.remove("mobile");    
+    sortBox.classList.remove("mobile");
 }
 
 function createMobileButtons() {
@@ -37,9 +37,9 @@ function createMobileButtons() {
     openAddItemBoxButton = document.createElement("button");
     viewListsButton.textContent = "View Lists";
     openAddItemBoxButton.textContent = "Add To-Do Item";
-    innerNav.id = "innerNav";    
-    viewListsButton.className = "mobile-button";  
-    openAddItemBoxButton.className = "mobile-button"; 
+    innerNav.id = "innerNav";
+    viewListsButton.className = "mobile-button";
+    openAddItemBoxButton.className = "mobile-button";
     innerNav.appendChild(viewListsButton);
     innerNav.appendChild(openAddItemBoxButton);
     openAddItemBoxButton.addEventListener("click", openAddItemBox);
@@ -51,8 +51,8 @@ function createTopNavBar() {
     topNavBar = document.createElement("div");
     topNavBar.id = "topNavBar";
     document.body.appendChild(topNavBar);
-    topNavBar.appendChild(mainTitle);       
-    topNavBar.appendChild(createMobileButtons());   
+    topNavBar.appendChild(mainTitle);
+    topNavBar.appendChild(createMobileButtons());
 }
 
 function createOverlay() {
@@ -69,12 +69,12 @@ function createOverlay() {
 function addMobileStyles(x) {
     if (x.matches) {
         rightSidebar.remove();
-        addMobileClass(); 
-        ribbon.remove();    
+        addMobileClass();
+        ribbon.remove();
         createTopNavBar();
         document.body.appendChild(sortBox);
-        document.body.appendChild(addItemBox);                          
-    }
+        document.body.appendChild(addItemBox);
+    } 
     else {
         removeMobileClass();
         document.body.appendChild(rightSidebar);
@@ -93,7 +93,7 @@ function addMobileStyles(x) {
 }
 
 function viewLists() {
-    leftSidebar.classList.add("visible");    
+    leftSidebar.classList.add("visible");
     if (!leftSidebar.contains(closeButton)) leftSidebar.appendChild(closeButton);
     closeButton.addEventListener("click", () => closePopup(leftSidebar));
     createOverlay();
@@ -101,7 +101,7 @@ function viewLists() {
 
 function openAddItemBox() {
     addItemBox.classList.add("visible");
-    if (!addItemBox.contains(closeButton)) addItemBox.appendChild(closeButton);    
+    if (!addItemBox.contains(closeButton)) addItemBox.appendChild(closeButton);
     closeButton.addEventListener("click", () => closePopup(addItemBox));
     createOverlay();
 }
@@ -115,4 +115,4 @@ function closePopup(popup) {
 
 widthTrigger.addEventListener("change", addMobileStyles);
 
-export {addMobileStyles, widthTrigger};
+export { addMobileStyles, widthTrigger };

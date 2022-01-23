@@ -8,7 +8,7 @@
     "watch": "webpack --watch",
     "build": "webpack",
     "start": "webpack serve --open",
-    "predeploy": "npm run build",	
+    "predeploy": "npm run build",
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
