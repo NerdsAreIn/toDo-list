@@ -8,7 +8,7 @@ import {
 const sortBox = document.getElementById("sortBox");
 
 sortBox.addEventListener("click", function getOrder(e) {
-    let activeList = myListsArray.find((list) => list.active == true);
+    let activeList = myListsArray.find(list => list.active == true);
     switch (e.target.id) {
       case "highPriority":
         getHighPriorityOrder(activeList);
