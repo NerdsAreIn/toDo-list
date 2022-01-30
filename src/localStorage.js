@@ -4,48 +4,45 @@ import {
   createListElements,
   loadDefaultList,
 } from "./DOM.js";
-import { addMobileStyles, widthTrigger } from "./media-queries.js";
-import { list } from "./manageLists.js";
+import {addMobileStyles, widthTrigger} from "./media-queries.js";
+import {list} from "./manageLists.js";
 
 let listNames;
 let LOCAL_STORAGE_LISTS_OBJECT = "task.myListsArray";
 
 window.onload = () => {
-  if (myListsArray.length == 0) {
-    const first = new list("Main");
-    first.active = true;
-  }
-  if (localStorage.getItem("listNames2")) {
-    // will already include "main" as first item:
-    listNames = localStorage.getItem("listNames2").split(",");
-  }
-  // first time app is used; "main" is added:
-  else listNames = ["Main"];
-  createListElements(listNames);
-  loadDefaultList();
-  addMobileStyles(widthTrigger);
+    if (myListsArray.length == 0) {
+        const first = new list("Main");
+        first.active = true;
+    }
+    if (localStorage.getItem("listNames2")) {
+        // will already include "main" as first item:
+        listNames = localStorage.getItem("listNames2").split(",");
+    }
+    // first time app is used; "main" is added:
+    else listNames = ["Main"];
+    createListElements(listNames);
+    loadDefaultList();
+    addMobileStyles(widthTrigger);
 };
 
 function setListNames() {
-  listNames = listElements.map((listElement) => {
-    if (listElement.children[0].childNodes[0].nodeValue != null) {
-      return listElement.children[0].childNodes[0].nodeValue;
-    }
-  });
-  return listNames;
+    listNames = listElements.map(listElement => {
+        if (listElement.children[0].childNodes[0].nodeValue != null) {
+            return listElement.children[0].childNodes[0].nodeValue;
+        }
+    });
+    return listNames;
 }
 
 function populateStorage() {
-  setListNames();
-  listNames.toString();
-  localStorage.setItem("listNames2", listNames);
-  localStorage.setItem(
-    LOCAL_STORAGE_LISTS_OBJECT,
-    JSON.stringify(myListsArray)
-  );
-  console.log("populated!");
+    setListNames();
+    listNames.toString();
+    localStorage.setItem("listNames2", listNames);
+    localStorage.setItem(LOCAL_STORAGE_LISTS_OBJECT, JSON.stringify(myListsArray));
+    console.log("populated!");
 }
 
 window.addEventListener("unload", populateStorage);
 
-export { populateStorage, listNames, setListNames, LOCAL_STORAGE_LISTS_OBJECT };
+export {populateStorage, listNames, setListNames, LOCAL_STORAGE_LISTS_OBJECT};

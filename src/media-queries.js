@@ -115,4 +115,4 @@ function closePopup(popup) {
 
 widthTrigger.addEventListener("change", addMobileStyles);
 
-export { addMobileStyles, widthTrigger };
+export {addMobileStyles, widthTrigger};

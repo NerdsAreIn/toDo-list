@@ -33,7 +33,7 @@ sortBox.addEventListener("click", function getOrder(e) {
     configCheckBoxes();
 });
 
-  function displayReorderedList(currentListOrder) {
+function displayReorderedList(currentListOrder) {
     mainList.textContent = "";
     let number = 1;
     for (let i = 0; i < currentListOrder.length; i++) {
@@ -62,47 +62,33 @@ function getLowPriorityOrder(activeList) {
 }
 
 function getIncompleteFirstOrder(activeList) {
-  let incompleteFirstOrder = activeList.contents.sort(
-    (listItemA, listItemB) => {
-      if (listItemA.completeValue < listItemB.completeValue) return 1;
-    }
-  );
-  displayReorderedList(incompleteFirstOrder);
+    let incompleteFirstOrder = activeList.contents.sort((listItemA, listItemB) => {
+          if (listItemA.completeValue < listItemB.completeValue) return 1;
+    });
+    displayReorderedList(incompleteFirstOrder);
 }
 
 function getCompleteFirstOrder(activeList) {
-  let completeFirstOrder = activeList.contents.sort((listItemA, listItemB) => {
-    if (listItemA.completeValue > listItemB.completeValue) return 1;
-  });
-  displayReorderedList(completeFirstOrder);
+    let completeFirstOrder = activeList.contents.sort((listItemA, listItemB) => {
+        if (listItemA.completeValue > listItemB.completeValue) return 1;
+    });
+    displayReorderedList(completeFirstOrder);
 }
 
 function getEarliestDateFirst(activeList) {
-  let earliestFirstOrder = activeList.contents.sort((listItemA, listItemB) => {
-    if (listItemA.dueDate > listItemB.dueDate) {
-      return 1;
-    }
-    if (listItemA.dueDate == listItemB.dueDate) {
-      return 0;
-    }
-    if (listItemA.dueDate < listItemB.dueDate) {
-      return -1;
-    }
-  });
-  displayReorderedList(earliestFirstOrder);
+    let earliestFirstOrder = activeList.contents.sort((listItemA, listItemB) => {
+        if (listItemA.dueDate > listItemB.dueDate) return 1;
+        if (listItemA.dueDate == listItemB.dueDate) return 0;
+        if (listItemA.dueDate < listItemB.dueDate) return -1;
+    });
+    displayReorderedList(earliestFirstOrder);
 }
 
 function getLatestDateFirst(activeList) {
-  let latestFirstOrder = activeList.contents.sort((listItemA, listItemB) => {
-    if (listItemA.dueDate > listItemB.dueDate) {
-      return -1;
-    }
-    if (listItemA.dueDate == listItemB.dueDate) {
-      return 0;
-    }
-    if (listItemA.dueDate < listItemB.dueDate) {
-      return 1;
-    }
-  });
-  displayReorderedList(latestFirstOrder);
+    let latestFirstOrder = activeList.contents.sort((listItemA, listItemB) => {
+        if (listItemA.dueDate > listItemB.dueDate) return -1;
+        if (listItemA.dueDate == listItemB.dueDate) return 0;
+        if (listItemA.dueDate < listItemB.dueDate) return 1;
+    });
+    displayReorderedList(latestFirstOrder);
 }
