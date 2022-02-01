@@ -20,6 +20,7 @@ function addMobileClass() {
     leftSidebar.classList.add("mobile-slide");
     addItemBox.classList.add("mobile-slide");
     sortBox.classList.add("mobile");
+    document.body.classList.add("mobile");
 }
 
 function removeMobileClass() {
@@ -29,6 +30,7 @@ function removeMobileClass() {
     addItemBox.classList.remove("visible");
     leftSidebar.classList.remove("visible");
     sortBox.classList.remove("mobile");
+    document.body.remove("mobile");
 }
 
 function createMobileButtons() {

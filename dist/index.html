@@ -3,8 +3,8 @@
   <head>
     <title>To-do List</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../src/toDo.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../src/toDo.css" type="text/css"/>
   </head>
   <body>
     <div id="title-bar">
@@ -19,15 +19,9 @@
           </li>
         </ul>
       </nav>
-      <input
-        type="text"
-        maxlength="40"
-        id="listName"
-        placeholder="Type name here..."
-        name="listName"
-        value=""
-      />
-      <button id="addListButton">Create New List</button><br />
+      <input type="text" maxlength="40" id="listName" placeholder="Type name here..."
+        name="listName" value="" />
+      <button id="addListButton">Create New List</button><br/>
     </div>
     <div id="mainBox">
       <h2 id="list-title">Main</h2>
@@ -39,18 +33,10 @@
         <label for="selectMenu">Sort by:</label>
         <select id="selectMenu">
           <option id="default-option">----------------</option>
-          <option
-            class="select-option"
-            id="dueDateEarliest"
-            value="dueDateEarliest"
-          >
+          <option class="select-option" id="dueDateEarliest" value="dueDateEarliest">
             Due date: earliest to latest
           </option>
-          <option
-            class="select-option"
-            id="dueDateLatest"
-            value="dueDateLatest"
-          >
+          <option class="select-option" id="dueDateLatest" value="dueDateLatest">
             Due date: latest to earliest
           </option>
           <option class="select-option" id="highPriority" value="highPriority">
@@ -59,18 +45,10 @@
           <option class="select-option" id="lowPriority" value="lowPriority">
             Priority: low to high
           </option>
-          <option
-            class="select-option"
-            id="incompleteFirst"
-            value="incompleteFirst"
-          >
+          <option class="select-option" id="incompleteFirst" value="incompleteFirst">
             Incomplete first
           </option>
-          <option
-            class="select-option"
-            id="completeFirst"
-            value="completeFirst"
-          >
+          <option class="select-option" id="completeFirst" value="completeFirst">
             Complete first
           </option>
         </select>
@@ -78,61 +56,19 @@
       <div id="addItemBox">
         <fieldset>
           <legend>Create a To-do Item</legend>
-          <label
-            >Item name:
-            <input
-              type="text"
-              maxlength="55"
-              id="nameField"
-              class="textfield"
-              name="name"
-              value=""
-              required /></label
-          ><br />
-          <label
-            >Item description:
-            <input
-              type="text"
-              maxlength="320"
-              class="textfield"
-              id="descripField"
-              name="description"
-              value="" /></label
-          ><br />
-          <label
-            >Item due date:
-            <input
-              type="date"
-              class="textfield"
-              id="dueField"
-              name="due"
-              value=""
-              required /></label
-          ><br />
+          <label>Item name: <input type="text" maxlength="55" id="nameField" class="textfield" 
+            name="name" value="" required /></label><br/>
+          <label>Item description: <input type="text" maxlength="320" class="textfield" id="descripField"
+              name="description" value="" /></label><br/>
+          <label>Item due date: <input type="date" class="textfield" id="dueField" 
+            name="due" value="" required /></label><br/>
           <h4>Item priority:</h4>
-          <label
-            >High
-            <input type="radio" class="priority" name="priority" value="high"
-          /></label>
-          <div id="red-box" class="colour-code"></div>
-          <br />
-          <label
-            >Medium
-            <input
-              type="radio"
-              class="priority"
-              name="priority"
-              value="medium"
-              checked
-          /></label>
-          <div id="orange-box" class="colour-code"></div>
-          <br />
-          <label
-            >Low
-            <input type="radio" class="priority" name="priority" value="low"
-          /></label>
-          <div id="green-box" class="colour-code"></div>
-          <br />
+          <label>High <input type="radio" class="priority" name="priority" value="high"/></label>
+          <div id="red-box" class="colour-code"></div><br/>
+          <label>Medium <input type="radio" class="priority" name="priority" value="medium" checked/></label>
+          <div id="orange-box" class="colour-code"></div><br/>
+          <label>Low <input type="radio" class="priority" name="priority" value="low"/></label>
+          <div id="green-box" class="colour-code"></div><br/>
           <button id="addButton">Add Item</button>
         </fieldset>
       </div>
