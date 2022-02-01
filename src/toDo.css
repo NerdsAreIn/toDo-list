@@ -200,7 +200,7 @@ input {
   position: fixed;
   left: 5px;
   bottom: 10px;
-  overflow: scroll;
+  overflow: auto;
   z-index: 2;
 }
 #mylists {
@@ -371,6 +371,7 @@ a:active {
   font-size: 1.1rem;
   cursor: pointer;
   border-radius: 4px;
+  padding: 2px;
 }
 .mobile-button:hover,
 .mobile-button:active,
@@ -407,21 +408,31 @@ a:active {
   color: white;
   background-color: dodgerblue;
 }
-:not(.mobile) ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 15px;
 }
-:not(.mobile) ::-webkit-scrollbar-track {
+#lists-sidebar::-webkit-scrollbar {
+  width: 10px; 
+}
+::-webkit-scrollbar-track {
   background: azure;
   border-radius: 10px;   
 }
-:not(.mobile) ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: dodgerblue;
   border-radius: 10px;
   border: 1px solid var(--myBlue);
-}
-:not(.mobile) ::-webkit-scrollbar-corner {
+  /* how to specify size?*/
+  }  
+::-webkit-scrollbar-corner {
   background-color: var(--myBlue);
   border-radius: 10px;
+}
+body.mobile::-webkit-scrollbar {
+  display: none;
+}
+#lists-sidebar::-webkit-scrollbar-track {
+ margin-right: 2px;
 }
 #lists-sidebar::-webkit-scrollbar-corner {
   display: none;

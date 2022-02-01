@@ -30,7 +30,7 @@ function removeMobileClass() {
     addItemBox.classList.remove("visible");
     leftSidebar.classList.remove("visible");
     sortBox.classList.remove("mobile");
-    document.body.remove("mobile");
+    document.body.classList.remove("mobile");
 }
 
 function createMobileButtons() {
